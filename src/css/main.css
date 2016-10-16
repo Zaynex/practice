@@ -313,7 +313,6 @@ header .main ul li a.active {
 
 
 .ad{
-	display: none;
 }
 
 .feature{
@@ -765,4 +764,11 @@ footer ul li .icon-gs {
 footer p {
     text-align: center;
     color: #999;
+}
+
+
+
+
+@media print{
+
 }
