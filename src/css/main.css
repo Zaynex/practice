@@ -643,7 +643,7 @@ header .main ul li a.active {
 	-webkit-filter:grayscale(100%); /*灰色滤镜*/
 	width: 20%;
 	height: 35px;
-	background-image: url("../img/logo@1x.png") no-repeat left;
+	background: url("../img/logo@1x.png") no-repeat left;
 	background-size: 150px 35px;
 }
 
@@ -767,8 +767,3 @@ footer p {
 }
 
 
-
-
-@media print{
-
-}
