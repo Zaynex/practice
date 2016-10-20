@@ -114,7 +114,7 @@ header .top ul li{
 	display: inline-block;
 }
 
-/*选中列表中后面4个元素*/
+/*选中列表中前面4个元素*/
 header .top ul li + li{
 	border-left: 1px solid #999;
 	margin-left: -3px;
@@ -307,13 +307,6 @@ header .main ul li a.active {
 	}
 }
 
-
-
-
-
-
-.ad{
-}
 
 .feature{
 	width: 90%;
