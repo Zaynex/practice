@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.image-bg{
+    width: 329px;
+    margin: 40px auto;
+  }
+  img {
+    width:100%;
+    opacity: 0;
+    transition: opacity .2s ease-in .25s;
+
+  }
+  .loaded img {
+    opacity: 1;
+  }
+	</style>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+<h1 style="text-align: center;">
+  先添加一个背景图，让用户感觉在加载，等到imgload完全的时候再添加图片,并且设置了透明度的动画，感觉这个流程特别和谐
+</h1>
+	<div class="post">  
+  <div class="image-bg" style="background-color:#141646">
+    <img width="310" height="242" src="demo.png" />
+  </div>
+  <p class="title">Mars</p>
+</div>  
+
+<div style="background: #ccc;">
+  <pre>
+    $(function() {
+    $('.post img').each(function() {
+       var el = this;
+       var image = new Image();
+       image.src = el.src;
+
+       image.onload = function() {
+         $(el).parent().addClass('loaded');
+       }
+    })
+  })
+  </pre>
+</div>
+<script>
+	$(function() {
+    $('.post img').each(function() {
+       var el = this;
+       var image = new Image();
+       image.src = el.src;
+
+       image.onload = function() {
+         $(el).parent().addClass('loaded');
+       }
+    })
+  })
+</script>
+</body>
+</html>

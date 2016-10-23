@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+		*{	
+			font-family: "微软雅黑";
+		}
+		.introduce ul>ul{
+			font-size: 14px;
+			font-weight: bold;
+		}
+		.introduce h1{
+			text-align: center;
+		}
+		.introduce h3{
+			color: tomato;
+			height: 20px;
+			line-height: 20px;
+		}
+		/*
+			demo效果
+		 */
+		
+
+		#portrait{
+			width: 600px;
+			height: 180px;
+			margin-left: auto;
+			margin-right: auto;
+			border: 1px solid black;
+		}
+		#portrait img{
+			width: 80px;
+			height: 100px;
+			padding: 10px 10px 0;
+		}
+		input[type="text"]{
+			width: 100px;
+			border: none;
+			background: black;
+			color: white;
+			text-align: center;
+			padding: 10px;
+			border: 2px solid yellow;
+			border-radius: 10px;
+			opacity: 0.7;
+		}
+		input[type="text"]:hover{
+			cursor: pointer;
+			background: white;
+			color:black;
+			border: 2px solid black;
+			transition:background-color 0.3s linear;//吊炸天的CSS3
+		}
+	</style>
+	<script src="default.js"></script>
+</head>
+<body>
+<div class="introduce">
+	<h1>JavaScript新手练习册</h1>
+	<p>
+		<h3>上传本地图片并预览</h3>
+		<ul>
+			<li>学会HTML5API FileReader的使用</li>
+				<ul>
+					<li>《JavaScript高级程序设计三第25章》</li>
+				</ul>
+			<li>判断上传文件是否为图片类型</li>
+				<ul>
+					<li>正则匹配</li>
+				</ul>
+			<li>修改选择文件文字按钮(**CSS3应用**)</li>
+				<ul>
+					<li>本方案采用设置新表单，隐藏旧表单，点击新表单触发原表单事件</li>
+					<li>disabled 禁用</li>
+					<li>readonly="readonly" 只读</li>
+				</ul>
+		</ul>
+	</p>
+</div>
+<hr>
+<h3>DEMO效果</h3>
+
+
+
+<!--分割-->
+<form action="" name="form1">
+	<fieldset>
+		<legend>选择图片</legend>
+			<input type="file" name="file" onchange="showPreview(this)" value="选择相册" style="display:none"/> 
+			<input type="text" value="上传照片" onclick= "document.form1.file.click()" readonly="readonly">
+		<div id="portrait"></div>
+	</fieldset>
+</form>
+<!--
+方法二：利用label for属性对应ID关联元素
+<form action="" style="display:none">
+	<input type="file" name='image' id="file1">
+</form>
+	<label for="file1" class="m-upload">选择</label>
+-->
+<script src="default.js"></script>
+<script src="demo.js"></script>
+	
+</body>
+</html>

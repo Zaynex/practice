@@ -1,0 +1,42 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>利用iframe实现表单的无刷新提交</title>
+    </head>
+    <body>
+       <iframe name="loginFrame" class="loginFrame" id="loginFrame" style="width:60px; height:60px;"></iframe>
+      <form target="loginFrame" action="/login" method="post" autocomplete="off">
+          <p>
+              <label>用户名:<input type="text" name="username"></label>
+          </p>
+          <p>
+              <label>密&nbsp;码:<input type="password" name="password"></label>
+          </p>
+          <p><input type="submit" name="LOGIN" value="LOGIN"></p>
+          <p class="msg" id="msg"></p>
+      </form>
+                   
+        <script type="text/javascript">
+            var enventUtil={
+                addHandler:function(elem,type,handler){
+                    if(elem.addEventListener){
+                        elem.addEventListener(type,handler,false);
+                    }else if(elem.attachEvent){
+                        elem.attachEvent('on'+type,handler);
+                    }else{
+                        elem['on'+type]=handler;
+                    }
+                }
+            }
+            var oFrame=document.getElementsByTagName('iframe');
+            var oDiv=document.getElementById('div1');
+            enventUtil.addHandler(oFrame,'load',function(){
+                var frameDocument=oFrame.contentDocument || oFrame.contentwindow.document;
+                if(frameDocument){
+                    oDiv.innerHTML=frameDocument.body.innerHTML;
+                }
+            })
+        </script>
+    </body>
+</html>

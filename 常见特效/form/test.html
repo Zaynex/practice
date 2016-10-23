@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+  
+<body>
+<form action="" id="group">
+<select name="" id="">
+    <option value="">请选择章</option>
+</select>
+<select name="" id="">
+    <option value="">请选择篇</option>
+</select>
+<select name="" id="">
+    <option value="">请选择节</option>
+</select>
+<form>
+<script>
+
+  
+var count = 0;
+//limit-列表长度
+//deep-数据层级数
+//返回一个测试数据列表
+var genList = function(limit, deep){
+    var ret = [];
+    if(!deep){
+        return ret;
+    }
+    for (var i = 0,it; i < limit; i++) {
+        it = deep + "." + i + "." + (count++);
+        ret.push({
+            text: it,
+            value: it,
+            list: genList(limit, deep-1)
+        });
+    }
+    return ret;
+}
+
+function cascade(selectList, data) {
+    var genList = function(n) {
+        var ret = data;
+        for(var i = 0,it; i < n; i++) {
+            it = Math.max(0, selectList[i].selectedIndex);
+            ret = (ret[it] || {}).list;
+        }
+        return ret;
+    };
+
+    var fillSelector = function(select, list){
+        for(var i = select.length - 1; i >= 0; i--) {
+            select.remove(i);
+        }
+        if(!list || !list.length) {
+            return;
+        }
+        for(var i = 0, l = list.length, it; i < l; i++) {
+            it = list[i];
+            select.add(new Option(it.text, it.value));
+        }
+    };
+
+    var onSelectChange = function(i) {
+        var next = i + 1;
+        if(next >= selectList.length) {
+            return;
+        }
+        fillAndChange(next);
+    };
+
+    var fillAndChange = function(index) {
+        fillSelector(
+            selectList[index],
+            genList(index)
+        );
+        onSelectChange(index);
+    };
+    var helper = function(index) {
+        return function() {
+            onSelectChange(index);
+        };
+    };
+
+    for(var i = 0, len = selectList.length - 1; i < len; i++){
+        selectList[i].onchange = helper(i);
+    }
+
+    fillAndChange(0);
+}
+
+var data = genList(3, 3);
+var selectList = document.getElementById('group').children;
+cascade(selectList, data);
+</script>
+</body>
+  
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			background: rgba(0,0,0,0.8);
+			font-family: "微软雅黑";
+		}
+		ul,li{
+			list-style: none;
+		}
+		.container{
+			width: 600px;
+			height: 1000px;
+			border-radius: 4px;
+			margin: 0 auto;
+			background: white;
+			padding: 0 20px;
+		}
+		.header>p{
+			font-size: 25px;
+		}
+		.information{
+			height: 50px;
+		}
+		.information .imgchoice{
+			float: right;
+		}
+		.information input[type='text']{
+			height: 30px;
+			vertical-align: middle;
+			margin-top: 10px;
+			border-radius: 10px;
+		}
+		.information img{
+			display: inline-block;
+			opacity: 0.3;
+			float: left;
+			width: 40px;
+			height: 40px;
+		}
+		.information img.current{
+			border: 1px solid red;
+			opacity: 1;
+		}
+		textarea{
+			margin-top: 20px;
+			width: 600px;
+			height: 200px;
+			resize: none; /*取消拖动*/
+		}
+		.submit{
+			height: 30px;
+			text-align: right;
+		}
+		.submit span{
+			vertical-align: middle;
+		}
+		.submit strong{
+			font: 26px/30px "Georgia, Tahoma, Arial";
+			vertical-align: top;
+		}
+		.submit input[type="button"]{
+			width: 50px;
+			height: 30px;
+			border: none;
+			background: green;
+			color: white;
+		}
+		.show {
+			width: 600px;
+			margin-top: 15px;
+		}
+		.show .show-title{
+			background: #e3eaec;
+			width: 600px;
+			height: 48px;
+			position: relative;
+			border: 1px solid #dee4e7;
+		}
+		.show-title p{
+			width: 100px;
+			background: white;
+			position: absolute;
+			left: 10px;
+			top: 10px;
+			text-align: center;
+			line-height: 40px;
+		}
+		ul>li img{
+			float: left;
+		}
+		ul>li{
+			width: 600px;
+			height: 50px;
+			border-bottom: 1px dashed #d8d8d8;
+			padding: 10px 0;
+		}
+		div.content{
+			width: 540px;
+			margin-left: 10px;
+			float: left;
+		}
+		.content .msgInfo{
+			word-wrap: break-word;
+			display: inline;	
+		}
+		.content .times{
+			margin-top: 10px;
+		}
+		.content .times a{
+			float: right;
+		}
+		li.active{
+			background: #d8d8d8;
+		}
+		li .del{
+			display: none;
+		}
+	</style>
+	<script src="util.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<p>talk something</p>
+		</div>
+		<form action="">
+			<div class="information">
+				<input type="text" class="setName">
+				<div class="imgchoice" id="face">
+					<img src="img/face1.gif" class="current" /><img src="img/face2.gif" /><img src="img/face3.gif" /><img src="img/face4.gif" /><img src="img/face5.gif" /><img src="img/face6.gif" /><img src="img/face7.gif" /><img src="img/face8.gif" />
+				</div>
+			</div>
+			<div class="send">
+				<!-- textarea是否为行标签 -->
+				<textarea class="textarea"></textarea>
+				<div class="submit"><span class="words">还能输入</span><strong class="leftwords">140</strong><span>个字</span>
+					<input type="button" value="广播" class="btn" title="ctrl+enter快捷键">
+				</div>
+		</form>
+		</div>
+		<div class="show">
+			<div class='show-title'><p>大家在说</p></div>
+			<ul class="addMessage">
+				<li>
+					<img src="img/face1.gif" alt="">
+					<div class="content">
+						<div class="userName">
+							<a href="#">name</a>说：
+							<div class="msgInfo">message</div>
+						</div>
+						<div class="times">
+							<span>日期</span>
+							<a href="#" class="del">删除</a>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	
+	<script src="index.js"></script>
+</body>
+</html>

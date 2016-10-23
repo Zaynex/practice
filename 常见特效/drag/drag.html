@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+		padding: 0;
+		margin: 0;
+		}
+		#myDiv{
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
+			cursor: pointer;
+		}
+		#status{
+			text-align: right;
+		}
+	</style>
+</head>
+<body>
+<div id="myDiv" class="draggable"></div>
+<div id="status"></div>
+	<script>
+
+		window.onload = function(){
+			var drag = new Drag('myDiv');
+			drag.init();
+		};
+		function Drag(container){
+			this.obj = document.getElementById(container);
+			this.disX = 0;
+			this.disY = 0;
+		}
+		Drag.prototype.init = function(){
+			var self = this;
+			this.obj.onmousedown = function(e){
+				var e = e || window.event;
+				self.mouseDown();
+				return false;//阻止默认事件
+			};
+		};
+
+		Drag.prototype.mouseDown = function(e){
+			var e = e || window.event;
+			var self =this;
+			this.disX = e.clientX - this.obj.offsetLeft;
+			this.disY = e.clientY - this.obj.offsetTop;
+
+
+			document.onmousemove = function(e){
+				var e = e || window.event;
+				self.mouseMove(e);
+			}
+			document.onmouseup = function(){
+				self.mouseUp();
+			}
+		};
+		Drag.prototype.mouseMove = function (e){
+		    this.obj.style.left = (e.clientX - this.disX) + 'px';
+		    this.obj.style.top = (e.clientY - this.disY) + 'px';
+		};
+		Drag.prototype.mouseUp = function(e){
+			document.onmousemove = null;
+			document.mousedown = null;
+		};
+
+	</script>
+</body>
+</html>

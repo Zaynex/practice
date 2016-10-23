@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		fieldset{
+			background: lightyellow;
+			border:10px solid yellow;
+			margin-top: 10px;
+			width: 720px;
+			padding: 8px 0;
+		}
+		label{
+			width: 180px;
+			display: inline-block;
+			text-align: right;
+			vertical-align: text-top;
+		}
+		label.lab-sp{
+			display: inline;
+			width: auto;
+		}
+		input[type="range"]{
+			text-align: center;
+			display: inline-block;
+		}
+		textarea{
+			width: 360px;
+			height: 50px;
+		}
+		span{
+			display: inline-block;
+			width: 50px;
+			height: 20px;
+			text-align: center;
+			line-height: 20px;			
+			color: white;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		span.range-red{
+			background: red;
+		}
+		span.range-purple{
+			background: purple;
+		}
+	</style>
+</head>
+<body>
+	<h1>Please Enter Your Details For Our Dating Website!</h1>
+	<form action="http://ihome.ust.hk/~rossiter/cgi-bin/show_everything.php" method="get">
+		<fieldset>
+			<legend>Your Face</legend>
+			<!--<label> 标签的 for 属性应当与相关元素的 id 属性相同。-->
+			<p><label for="avatar">Your image:</label><input type="file" id="avatar" name="avatar" required></p>
+			<p><label>Image preview:</label><img src="" alt="" id="preview"></p>
+		</fieldset>
+		<fieldset>
+			<legend>Your General Deatails</legend>
+			<p><label for="name">Name:</label><input type="text" id="name" name="name" required placeholder="Your full name"></p>
+			<p><label>Gender:</label><label class="lab-sp"><input type="radio" name="sex" required>Male</label><label class="lab-sp"><input type="radio" name="sex" required>Female</label></p>
+			<p><label for="age">Age:</label><input type="number" id="age" name="age" required></p>
+			<p><label for="date">Date of Birth:</label><input type="date" id="date" name ="date" required></p>
+			<p><label for="color">Favorite color:</label><input type="color" name="color" id="color"></p>
+			<p><label for="country">Which country:</label><select name="country" id="country">
+				<option value=""></option>
+				<option value="China">China</option>
+				<option value="Japan">Japan</option>
+				<option value="Mars">Mars</option>
+				<option value="American">American</option>
+				<option value="Canada">Canada</option>
+			</select></p>
+		</fieldset>
+		<fieldset>
+			<legend>Your Indicators</legend>
+			<p><label for="height">Height:</label><span class="range-red">Short</span><input type="range" max="100" min="0"><span class="range-purple">Tall</span></p>
+			<p><label for="salary">Salary:</label><span class="range-red">Poor</span><input type="range" max="100" min="0"><span class="range-purple">Rich</span></p>
+		</fieldset>
+		<fieldset
+			<legend>Your Contact Information</legend>
+			<p><label for="email">Email:</label><input type="email" name="email" id="email" required></p>
+			<p><label for="mobile">Mobile:</label><input type="tel" name="mobile" id="mobile"></p>
+			<p><label for="address">Address:</label><textarea name="address" id="address" cols="20" rows="3"></textarea></p>
+			<p><label>Method to contact you:</label><label class="
+			lab-sp"><input type="checkbox" id="cbox1" name="cemail">Email</label>
+				<label class="lab-sp"><input type="checkbox" id="cbox2" name="capp">Whatsapp</label>
+				<label class="lab-sp"><input type="checkbox" id="cbox3" name="cchat">In-app chat</label>
+			</p>
+		</fieldset>
+		<p><input type="submit" name="submit" id="submit" value="submit"></p>
+	</form>
+	<script src="https://www.cse.ust.hk/~rossiter/dating_web_site.js"></script>
+</body>
+</html>

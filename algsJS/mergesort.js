@@ -45,3 +45,27 @@ function mergeSort(items){
 
 var str = [1,24,234,53,45,56,3,234,58,9];
 console.log(mergeSort(str));
+
+//上面的这种方式会频繁的自调用。合并排序算法同样可以用迭代实现
+
+function mergeSort(items){
+	if(items.length == 1) {
+		return items;
+	}
+
+	var work = [];
+
+	for(var i = 0; i < items.length; i++){
+		work.push([items[i]]);
+	}
+	work.push([]);//如果长度为奇数
+
+	for(var lim = len; lim > 1; lim =(lim + 1) /2){
+		for(var j =0, k =0; k < lim; j++, k+=2){
+			work[j] = merge(work[k], work[k+1]);
+		}
+		work[j] = [];//如果长度为奇数95
+	}
+
+	return work[0];
+}

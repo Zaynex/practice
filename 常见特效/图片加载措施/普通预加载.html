@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<h1 style="text-align: center;">普通预加载，new Image()对象</h1>
+	<img src="http://img3.douban.com/lpic/s24418088.jpg" alt="" id="img">
+	<p>鼠标放到图片上试试</p>
+	<script>
+		window.onload = function(){
+			var img = new Image();
+			img.onload = function(){
+				alert("预加载完全");
+			}
+			img.src = "http://www.2cto.com/uploadfile/Collfiles/20141017/2014101709072456.png";
+			img.onerror = function(){
+				alert("加载失败");
+			}
+			var img = document.getElementById("img");
+			img.onmouseover = function(){
+				img.src = "http://www.2cto.com/uploadfile/Collfiles/20141017/2014101709072456.png";
+			};
+			img.onmouseout = function(){
+				img.src= "http://img3.douban.com/lpic/s24418088.jpg";
+			}
+		}
+	</script>
+</body>
+</html>

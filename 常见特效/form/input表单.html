@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>bing search</title>
+	<style type="text/css">
+		ul,li{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		body{background-color: #333;}
+		.bg-div{
+			position:relative;
+			/*text-align:center;*/
+			margin: 0 auto;
+			height: 690px; 
+			width: 1228px;
+			background-image: url(bing.jpg);
+		}
+		.logo{
+		    float:left;
+			background: url(http://img.mukewang.com/52da5e530001eea901070053.jpg) no-repeat;
+			margin: -4px 18px 0 0;
+			height: 53px;
+			width: 107px;
+		}
+		.search-warp{
+		    float:left;
+			background-color:#fff;
+			width:407px;
+			padding:5px;
+		}
+		.search-input{
+			float:left;
+			border: 0;
+			font-size: 100%;
+			width: 375px;
+			outline: none;/**/
+			line-height:25px;
+		}
+		.search-submit{
+			float:left;
+			cursor: pointer;
+			height: 29px;
+			width: 29px;
+			background: transparent url(http://img.mukewang.com/52da5df800012b1e02220137.jpg) no-repeat -30px -107px;
+			border: 0;
+		}
+		.search-box{
+			position:absolute;
+			top:200px;
+			left:150px;
+		}
+		.suggest{
+			position: absolute;
+			width: 417px;
+			height: 100px;
+			background: white;
+			border: 1px solid #999;
+			left: 124px;
+			top: 39px;
+		}
+		.suggest ul li{
+			padding: 3px;
+			font-size: 14px;
+			line-height: 25px;
+			cursor: pointer;
+		}
+		.suggest ul li:hover{
+			background: #999;
+		}
+	</style>
+</head>
+<body>
+	<div class="bg-div">
+	<div class="search-box">
+		<div class="logo"></div>
+	    <form action="https://www.bing.com/search" target="_blank" method="get" class="search-warp">
+				<input class="search-input" type="text" name="q">
+				<input class="search-submit" type="submit" value=""/>
+		<div class="suggest">
+			<ul>
+				<li>搜索结果1</li>
+				<li>搜索结果2</li>
+				<li>搜索结果3</li>
+			</ul>
+		</div>
+		</form>
+	</div>
+	</div>
+	<script src="../js/util.js"></script>
+</body>
+</html>
