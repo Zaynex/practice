@@ -1,0 +1,18 @@
+/*.h5_component_radar{
+
+}*/
+
+.h5_component_radar canvas{
+	position: absolute;
+	left: 0;
+	top: 0; /*用canvas做动画需要将背景分层*/
+	width: 100%;
+	height: 100%;
+	/*background-color: #CCC;*/
+}
+
+.h5_component_radar .text{
+	position: absolute;
+	font-size: 12px;
+	transition:  all 1s;
+}
