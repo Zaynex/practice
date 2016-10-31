@@ -1,5 +1,5 @@
 /* 内容管理对象 */
-
+var jdata = [];
 var H5 =function ( ) {
     this.id = ('h5_'+Math.random()).replace('.','_');
     this.el = $('<div class="h5" id="'+this.id+'">').hide();
@@ -13,6 +13,7 @@ var H5 =function ( ) {
      * @return {H5} H5对象，可以重复使用H5对象支持的方法
      */
     this.addPage = function( name , text ){
+        jdata.push({isPage:true,name:name, text:text});
         var page = $('<div class="h5_page section">');
 
         if( name != undefined ){
@@ -32,6 +33,7 @@ var H5 =function ( ) {
 
     /* 新增一个组件 */
     this.addComponent = function(name, cfg){
+        jdata.push({isPage:false,name:name, cfg:cfg});
         var cfg = cfg || {};
         cfg = $.extend({
              type : 'base'

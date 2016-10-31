@@ -1,4 +1,3 @@
-
 /* 环图组件对象 */
 
 var H5ComponentRing =function ( name, cfg ) {
