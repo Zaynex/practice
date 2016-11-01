@@ -60,7 +60,7 @@
         -webkit-opacity:.9;
     }
     95%{
-        -webkit-transform:scale(1.5);
+        -webkit-transform:scale(2.0);
         -webkit-opacity:0;
     }
     100%{

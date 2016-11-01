@@ -11,16 +11,16 @@
 	<script src="js/lib/jquery.fullPage.js"></script>
 	<script src="js/H5_loading.js"></script>
 	<script type="text/javascript">
-	var res = [
-		'Base', 'Bar', 'Bar_v', 'Point', 'Radar', 'Ring', 'Polyline', "Pie"
-	];
+		var res = [
+			'Base', 'Bar', 'Bar_v', 'Point', 'Radar', 'Ring', 'Polyline', "Pie"
+		];
 
-	var html = [];
-	for (var s in res) {
-		html.push('<script type="text/javascript" src="js/H5Component' + res[s] + '.js"><\/script>');
-		html.push('<link rel="stylesheet" href="css/H5Component' + res[s] + '.css">');
-	}
-	document.write(html.join(""));
+		var html = [];
+		for (var s in res) {
+			html.push('<script type="text/javascript" src="js/H5Component' + res[s] + '.js"><\/script>');
+			html.push('<link rel="stylesheet" href="css/H5Component' + res[s] + '.css">');
+		}
+		document.write(html.join(""));
 	</script>
 	<script src="js/H5.js"></script>
 	<link rel="stylesheet" href="css/H5.css">
