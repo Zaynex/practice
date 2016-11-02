@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="css/H5ComponentPoint.css">
+    <link rel="stylesheet" href="css/H5ComponentBar_v.css">
     <link rel="stylesheet" href="css/H5ComponentBase.css">
     <style>
     body {
@@ -24,7 +24,8 @@
         margin: -270px 0 0 -170px;
     }
     </style>
-    <script src="js/H5ComponentPoint.js"></script>
+     <script src="js/H5ComponentBar.js"></script>
+    <script src="js/H5ComponentBar_v.js"></script>
     <script src="js/lib/jquery.js"></script>
     <script src="js/H5ComponentBase.js"></script>
 </head>
@@ -33,32 +34,32 @@
     <div class="iphone"></div>
     <script>
     var cfg = {
-        type: "point",
-        width: 300,
-        height: 300,
+        type: "bar_v",
+        width: 530,
+        height: 600,
         data: [
-            ['A项目', 0.4, 'green'],
-            ['B项目', 0.2, 'yellow', 0,'-60%'],
-            ['C项目', 0.2, 'red', 0, '120%'],
+            ['JS', 0.5, 'green'],
+            ['CSS3', 0.2, 'yellow', 0,'-60%'],
+            ['HTML5', 0.2, 'red', 0, '120%'],
+            ['jQuery', 0.3, 'red', 0, '120%'],            
         ],
         css: {
-        	bottom: 0,
+        	top: 100,
             opacity: 0
         },
         animateIn:{
-        	bottom: '40%',
+            top: 100,
         	opacity: 1
         },
         animateOut:{
-        	bottom: 0,
+            top: 200,
         	opacity: 0
         },
         center: true,
    };
 
-    var h5 = new H5ComponentPoint('myName', cfg);
+    var h5 = new H5ComponentBar_v('myBarComponent', cfg);
     $(".iphone").append(h5);
-    
     var leave = true;
     $("body").click(function(){
     	leave = !leave;

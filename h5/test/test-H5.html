@@ -10,7 +10,12 @@
 	<script src="../js/lib/jquery.fullPage.js"></script>
 	<script src="../js/lib/jquery-ui.min.js"></script>
 	<script src="../js/H5ComponentBase.js"></script>
-
+	<style>
+		body{
+			margin:0;
+			padding: 0;
+		}
+	</style>
 </head>
 <body>
 	<script>
@@ -18,39 +23,41 @@
 		$(function(){
 			var h5 = new H5();
 			h5.addPage('face', '首页')
-					.addComponent("logo", {
-						text:'logo',
-						width: 400,
-						height: 100,
-						css:{backgroundColor:"red", top:200, opacity:0},
-						center: true,
-						animateIn: {opacity: 0.8},
-						animateOut: {opacity: 0}
-					})		
-					.addComponent('slogan',{
-						text:'slogan',
-						width: 400,
-						height: 100,
-						css:{backgroundColor:"green",top:300},
-						center: true,
-					})
-				.addPage('desc', "核心理念")
-					.addComponent('caption',{
-						text:"核心理念",
-						width: 400,
-						height: 100,
-						css:{backgroundColor:"red", top:200},
-						center: true
+				.addComponent("logo", {
+					text:'logo',
+					width: 400,
+					height: 100,
+					css:{backgroundColor:"red", top:200, opacity: 0},
+					center: true,
+					animateIn: {opacity: 0.8},
+					animateOut: {opacity: 0}
+				})		
+				.addComponent('slogan',{
+					text:'slogan',
+					width: 400,
+					height: 100,
+					css:{backgroundColor:"green",top:300},
+					center: true,
 				})
-				.addPage("page-3", "还不错的界面")
-					.addComponent("caption",{
-						text:"课程方向分布",
-						width: 400,
-						height: 100,
-						css:{backgroundColor:"green", top:300},
-						center: true
-					})
-				.loader();
+			.addPage('desc', "核心理念")
+				.addComponent('caption',{
+					text:"核心理念",
+					width: 400,
+					height: 100,
+					css:{backgroundColor:"red", top:200},
+					center: true
+			})
+			.addPage("page-3", "还不错的界面")
+				.addComponent("caption",{
+					text:"课程方向分布",
+					width: 400,
+					height: 100,
+					css:{backgroundColor:"green", top:300},
+					center: true
+				})
+				
+			//当图片非常多时，利用loader先加载完图片后再进行页面的显示
+			.loader();
 			});
 	</script>
 </body>

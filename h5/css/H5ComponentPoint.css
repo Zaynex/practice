@@ -10,6 +10,7 @@
     border-radius: 50%;
     -webkit-opacity:0;
     -webkit-transition:all 1s;
+    cursor: pointer;
 }
 
 .h5_component_point .name{
@@ -60,7 +61,7 @@
         -webkit-opacity:.9;
     }
     95%{
-        -webkit-transform:scale(2.0);
+        -webkit-transform:scale(1.5);
         -webkit-opacity:0;
     }
     100%{

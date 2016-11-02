@@ -4,9 +4,15 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-	
+		body{
+			padding: 0;
+			margin: 0;
+		}
 		.component{
-			display: none;
+			width: 100px;
+			height: 30px;
+			background: white;
+			/*display: none;*/
 		}
 	</style>
 	<script src="../js/lib/jquery.js"></script>
@@ -15,7 +21,7 @@
 	<script>
 		$(function(){
 			$("#h5").fullpage({
-				'sectionColor': ['#123456', '#542321', '#00ff00'],
+				'sectionsColor': ['#1bbc9b', '#4BBFC3', '#7BAABE', '#f90'],
 				onLeave: function(index, nextIndex, direction){
 					$("#h5").find('.page').eq(index - 1).trigger('onLeave');
 				},
@@ -45,7 +51,7 @@
 <body>
 	<div id="h5">
 		<div class="page section" id="page-1">
-			<div class="component log">logo</div>
+			<div class="component log" title="logo">logo</div>
 			<div class="component slogan">slogan</div>
 		</div>
 		<div class="page section" id="page-2">

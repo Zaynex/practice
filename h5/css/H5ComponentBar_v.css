@@ -17,13 +17,14 @@
     left: 0;
     height: 20px;
     line-height: 20px;
+    /*上面都留给柱状图的,所以直接bottom下*/
     bottom: -20px;
     text-align: center;
 }
 
 .h5_component_bar_v .rate{
     height: 100%;
-    width: 15px;
+    width: 16px;
     position: absolute;
     bottom: 0;
     left: 50%;
