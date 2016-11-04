@@ -2,7 +2,7 @@ var H5_loading = function  (images,firstPage) {
         
         var id = this.id;
 
-        if(this._images === undefined ){ //  第一次进入
+        if(this._images === void 0 ){ //  第一次进入
 
             this._images = ( images || [] ).length;
             this._loaded = 0 ;

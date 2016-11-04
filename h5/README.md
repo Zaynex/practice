@@ -24,3 +24,99 @@ css水影效果
 
 //保留整数右移
 var width = (100/cfg.data.length) >> 0;
+
+
+折线图
+因为我们要求数据是在坐标轴的中心点上。所以要画的线的条数是 数据长度+2
+。
+画完之后发现其实整体的坐标还需要往右移一个单位。
+```js
+var row_w = (w / (cfg.data.length + 1));
+    for(i in cfg.data){
+      var item = cfg.data[i];
+      // x = (w / cfg.data.length) * i;
+      x = row_w * i + row_w;
+      y = h - (item[1] * h * per);
+      ctx.moveTo(x, y);
+      ctx.arc(x, y, 5, 0, 2*Math.PI);
+    }
+```
+从代码中我们可以看出，首先是分成了（数据长度+1）宽度，
+这样每个起始点再加一个单位宽度就刚好位置都对齐了。
+
+```js
+ctx.fillText(num, x, y);//num数值， （x,y）坐标
+```
+
+雷达图
+计算一个圆周上的坐标（计算多边形的顶点坐标）
+已知：圆心坐标(a,b)、半径 r；角度deg。
+rad = ( 2*Math.PI / 360 ) * ( 360 / step ) * i
+x = a + Math.sin( rad ) * r;
+y = b + Math.cos( rad ) * r;
+
+```js
+var cns = document.createElement("canvas");
+  var ctx = cns.getContext("2d");
+  cns.width = ctx.width = w;
+  cns.height = ctx.height = h;
+  component.append(cns);
+
+  var r = w /2;
+  ctx.beginPath();
+  ctx.arc(r, r, 5, 0, 2*Math.PI);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(r, r, r-5, 0 ,2*Math.PI);
+  ctx.stroke();
+
+  var step = cfg.data.length;
+  //伞骨图
+  ctx.beginPath();
+  for(var s = 0; s < step; s++){
+    var rad = (2*Math.PI / 360) * (360 / step) * s;
+    var x = r + Math.sin(rad) * r;
+    var y = r + Math.cos(rad) * r;
+
+    // ctx.moveTo(r, r);
+    ctx.lineTo(x, y);
+    // ctx.arc(x, y, 5, 0, 2*Math.PI);
+  }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    //内雷达图
+    ctx.beginPath();
+   for(var s = 0; s < step; s++){
+    var rad = (2*Math.PI / 360) * (360 / step) * s;
+    var x = r + Math.sin(rad) * r * 0.5;
+    var y = r + Math.cos(rad) * r * 0.5;
+
+    // ctx.moveTo(r, r);
+    ctx.lineTo(x, y);
+    // ctx.arc(x, y, 5, 0, 2*Math.PI);
+  }
+    ctx.fillStyle = '#f00';
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+```
+
+```js
+for(var i = 0; i < step; i++){
+    var  rad = ( 2*Math.PI / 360 ) * ( 360 / step ) * i;
+
+    var x = r + Math.sin( rad ) * r ;
+    var y = r + Math.cos( rad ) * r ;
+    ctx.moveTo(r,r);
+    ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle = "#e0e0e0";
+  ctx.stroke();
+
+  ```
+
+  饼图
+  3层结构

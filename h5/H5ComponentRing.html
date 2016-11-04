@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="css/H5ComponentPie.css">
     <link rel="stylesheet" href="css/H5ComponentBase.css">
-    <link rel="stylesheet" href="css/H5ComponentPolyline.css">
+    <link rel="stylesheet" href="css/H5ComponentRing.css">
     <style>
     body {
         margin: 0;
         padding: 0;
         background-color: #000;
-        font-size: 62.5%;
+        font-size: 12px;
     }
     
     .iphone {
@@ -24,7 +25,8 @@
         margin: -270px 0 0 -170px;
     }
     </style>
-    <script src="js/H5ComponentPolyline.js"></script>
+    <script src="js/H5ComponentPie.js"></script>
+    <script src="js/H5ComponentRing.js"></script>
     <script src="js/lib/jquery.js"></script>
     <script src="js/H5ComponentBase.js"></script>
 </head>
@@ -33,38 +35,33 @@
     <div class="iphone"></div>
     <script>
     var cfg = {
-        type: "polyline",
-        width: 530,
+        type: "pie",
+        width: 400,
         height: 400,
         data: [
-            ['JS', 0.7, 'green'],
-            ['CSS3', 0.4, 'orange', 0,'-60%'],
-            ['HTML5', 0.5, 'red', 0, '120%'],
-            ['Node.js', 0.3, null,0 , '120%'],
-            ['jQuery', 0.5, 'red', 0, '120%'],
-            
+            ['JS', 0.4, 'green'],         
         ],
         css: {
-        	top: 100,
+            top:200,
             opacity: 0
         },
         animateIn:{
             top: 200,
-        	opacity: 1
+            opacity: 1
         },
         animateOut:{
-            top: 100,
-        	opacity: 0
+            opacity: 0,
+            top: 100
         },
         center: true,
    };
 
-    var h5 = new H5ComponentPolyline('myName', cfg);
+    var h5 = new H5ComponentRing('myRing', cfg);
     $(".iphone").append(h5);
     var leave = true;
     $("body").click(function(){
-    	leave = !leave;
-    	$(".h5_component").trigger( leave ? "onLeave" : "onLoad");
+        leave = !leave;
+        $(".h5_component").trigger( leave ? "onLeave" : "onLoad");
     });
 
     </script>

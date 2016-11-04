@@ -7,8 +7,8 @@ var H5ComponentPoint = function(name, cfg){
   $.each(cfg.data, function(idx, item){
     var point = $('<div class="point point_'+ idx +'"></div>');
     var name = $('<div class="name">'+ item[0] +'</div>');
-    var rate = $('<div class="per">'+ (item[1]/base)*100 +'%</div>');
-    var per = (item[1]/base)*100 + "%";
+    var rate = $('<div class="per">'+ ((item[1]/1)*100>>0) +'%</div>');
+    var per = (item[1]/base)*100>>0 + "%";
 
     point.width(per).height(per);
     if(item[2]){

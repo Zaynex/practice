@@ -22,6 +22,11 @@ var H5ComponentBase = function(name, cfg){
         // top: 50,
     });
 
+
+    if(typeof cfg.onclick === 'function'){
+        component.on('click', cfg.onclick);
+    }
+
     component.on('onLoad', function(){
          component.addClass(cls + "_load").removeClass(cls + "_leave");
          cfg.animateIn && component.animate(cfg.animateIn);

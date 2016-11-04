@@ -24,9 +24,10 @@ var H5 =function ( ) {
         }
         this.el.append(page);
         this.page.push( page );
+        
+        //这部分是在每个页面下添加滑动提示
         if( typeof this.whenAddPage === 'function' ){
             this.whenAddPage();
-            console.log("h11");
         }
         return this;
     }
