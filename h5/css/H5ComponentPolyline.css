@@ -1,0 +1,31 @@
+/*.h5_component_polyline{
+
+}*/
+
+.h5_component_polyline canvas{
+	position: absolute;
+	left: 0;
+	top: 0; /*用canvas做动画需要将背景分层*/
+	width: 100%;
+	height: 100%;
+}
+
+.h5_component_polyline .text{
+	position: absolute;
+	text-align: center;
+	font-size: 12px;
+	bottom: -20px;
+	line-height: 20px;
+	transform:scale(.8);//chrome不会设置小于16px，可以用缩放形式
+	-webkit-transform: scale(0.8);
+	-webkit-transition: all 1s 1.5s;
+	-webkit-opacity: 0;
+}
+
+.h5_component_polyline_load .text{
+	-webkit-opacity: 1;
+}
+
+.h5_component_polyline_leave .text{
+	-webkit-opacity: 0;
+}

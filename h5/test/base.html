@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../js/lib/jquery.js"></script>
+	<script src="../js/lib/jquery.fullPage.js"></script>
+	<script src="../js/lib/jquery-ui.min.js"></script>
+	<script src="../js/H5ComponentBase.js"></script>
+	<link rel="stylesheet" href="../css/H5ComponentBase.css">
+	<style>
+		body,ul,li,p,h1,div{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			font-size: 12px;
+			background: black;
+		}
+		.iphone{
+			width: 340px;
+			height: 540px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-top: -270px;
+			margin-left: -170px;
+			background: white;
+		}
+/*		.h5_component_base{
+			transition: all 1s;
+		}
+		.h5_component_base_load{
+			opacity: 1;
+		}
+		.h5_component_base_leave{
+			opacity: 0;
+		}*/
+	</style>
+</head>
+<body>
+	<div class="iphone">
+		
+	</div>
+	<script>
+		var cfg = {
+			type: 'base',
+			// text: '我是文本内容啊',
+			width: 514,
+			height: 306,
+			bg: '../imgs/p1_people.png',
+			css: {
+				bottom: 0,
+				opacity: 0
+			},
+			animateIn:{
+				bottom: 80,
+				opacity: 1
+			},
+			animateOut:{
+				bottom: 0,
+				opacity: 0
+			},
+			center: true,
+
+		};
+
+		var h5 = new H5ComponentBase('myname', cfg);
+		$(".iphone").append(h5);
+
+		var leave = true;
+		$("body").click(function(){
+			leave = !leave;
+			$(".h5_component").trigger(leave? 'onLeave' : 'onLoad');
+		});
+		
+	</script>
+</body>
+</html>
