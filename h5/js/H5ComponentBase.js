@@ -1,4 +1,9 @@
 /* 基本图文组件对象 */
+/**
+ * 创建一个图文组件
+ * @param {string} name 自定义的图文组件名称
+ * @param {object} cfg  配置选项
+ */
 var H5ComponentBase = function(name, cfg){
     var cfg = cfg || {};
     var type = cfg.type || "base";
@@ -32,6 +37,7 @@ var H5ComponentBase = function(name, cfg){
          cfg.animateIn && component.animate(cfg.animateIn);
         return false;
     });
+
     component.on('onLeave', function(){
         component.addClass(cls+"_leave").removeClass(cls + "_load");
          cfg.animateOut && component.animate(cfg.animateOut);

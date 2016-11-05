@@ -41,16 +41,8 @@ var H5ComponentPolyline = function(name, cfg){
     }
   }
 
-
-
   ctx.stroke();
   
-
-
-
-
-
-
   /**
    * 折线图数据层
    *@param  {floot} per 0到1之间的数据，会根据这个值绘制最终数据对应的中间状态

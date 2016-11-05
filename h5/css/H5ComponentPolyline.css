@@ -13,7 +13,7 @@
 .h5_component_polyline .text{
 	position: absolute;
 	text-align: center;
-	font-size: 1.5em;
+	font-size: 12px;
 	bottom: -20px;
 	line-height: 20px;
 	transform:scale(.8);//chrome不会设置小于16px，可以用缩放形式
