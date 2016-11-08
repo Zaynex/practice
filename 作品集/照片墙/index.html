@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul{
+			width: 660px;
+			margin: 10px auto;
+			position: relative;
+		}
+		li{
+			list-style: none;
+			width: 200px;
+			height: 150px;
+			float: left;
+			margin-left: 10px;
+			margin-bottom: 10px;
+		}
+		.active{
+			border:1px red solid;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oUl = document.querySelector("#ul1");
+			var oLi = oUl.querySelectorAll("li");
+			var i = 0;
+			var aPos = [];
+			var mInIndex = 1;
+			for(i = 0; i < oLi.length; i++){
+				aPos[i] = {left:oLi[i].offsetLeft, top: oLi[i].offsetTop};
+			}
+			//布局转换
+			for(i = 0; i <oLi.length; i++){
+				oLi[i].style.left = aPos[i].left + "px";
+				oLi[i].style.top = aPos[i].top + "px";
+				oLi[i].style.position = "absolute";
+				oLi[i].style.margin = "0";
+				oLi[i].index= i;
+			}
+
+			for(i = 0; i < oLi.length; i++){
+				setDrag(oLi[i]);
+			}
+			function setDrag(obj){
+				obj.onmousedown = function(ev){
+					obj.style.zIndex = mInIndex++;
+					ev = ev || window.event;
+					var disX = ev.clientX - obj.offsetLeft;
+					var disY = ev.clientY - obj.offsetTop;
+
+					document.onmousemove = function(ev){
+						ev = ev || window.event;
+						obj.style.left = ev.clientX - disX + "px";
+						obj.style.top  = ev.clientY - disY + "px";
+						for(i = 0; i <oLi.length; i++){
+							oLi[i].className = "";
+						}
+						var oNear = findNearse(obj);
+						if(oNear) {
+							oNear.className = "active";
+						}
+
+					};
+					document.onmouseup = function(){
+						document.onmousedown = null;
+						document.onmousemove = null;
+
+						var oNear = findNearse(obj);
+						if(oNear){
+							oNear.className = "";
+							oNear.style.zIndex = mInIndex++;
+							obj.style.zIndex = mInIndex++;
+							startMove(oNear, aPos[obj.index]);
+							startMove(obj, aPos[oNear.index]);
+							var temp = 0;
+							temp = obj.index;
+							obj.index = oNear.index;
+							oNear.index = temp;
+
+						}else{
+							// startMove(obj, {left:aPos[obj.index].left, top:aPos[obj.index].top});
+							startMove(obj, aPos[obj.index]);
+						}
+					}
+					clearInterval(obj.timer);
+				return false;
+				}
+			}
+
+			function cdTest(obj1, obj2){
+				var l1 = obj1.offsetLeft;
+				var r1 = obj1.offsetLeft + obj1.offsetWidth;
+				var t1 = obj1.offsetTop;
+				var b1 = obj1.offsetTop + obj1.offsetHeight;
+
+				var l2 = obj2.offsetLeft;
+				var r2 = obj2.offsetLeft + obj2.offsetWidth;
+				var t2 = obj2.offsetTop;
+				var b2 = obj2.offsetTop + obj2.offsetHeight;
+				
+				if(r1 < l2 || l1 > r2 || t1 > b2 || b1 < t2){
+					return false;
+				}
+				return true;
+			}
+
+
+			function getDis(obj1, obj2){
+				var a = obj1.offsetLeft - obj2.offsetLeft;
+				var b = obj1.offsetTop - obj2.offsetTop;
+				return Math.sqrt(a*a + b*b);
+			}
+
+			function findNearse(obj){
+				var iMin = 99999;
+				var iMinIndex=  -1;
+				for(i = 0; i < oLi.length; i++){
+					if(obj == oLi[i]) continue;
+					if(cdTest(obj, oLi[i])) {
+						var dis = getDis(obj, oLi[i]);
+						if(dis < iMin) {
+							iMin = dis;
+							iMinIndex = i;
+						}
+					};
+				}
+
+				if(iMinIndex == -1){
+					return null;
+				}else {
+					return oLi[iMinIndex];
+				}
+			} 
+			function getStyle(obj, attr){
+	if(obj.currentStyle){
+		return obj.currentStyle;
+	}else{
+		return getComputedStyle(obj, false)[attr];
+	}
+}
+
+function startMove(obj, json, fn){
+	clearInterval(obj.timer);
+	obj.timer = setInterval(function(){
+
+		var bStop = true; //所有值都达到了
+
+		for(var attr in json){
+			var iCur = 0;
+			if(attr == 'opacity'){
+				iCur = parseInt(parseFloat(getStyle(obj, attr))*100);
+			}else{
+				iCur = parseInt(getStyle(obj, attr));
+			}
+
+			var iSpeed = (json[attr] - iCur)/8;
+			iSpeed = iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+			
+			if(iCur != json[attr]){
+				bStop = false;
+			}
+
+			if(attr == 'opacity'){
+				obj.style.filter = 'alpha(opacity:'+(iCur+iSpeed)+')';
+				obj.style.opacity = (iCur+iSpeed)/100;
+			}
+			else{
+				obj.style[attr]  = iCur + iSpeed +"px";
+			}
+		}
+
+		if(iCur != json[attr])
+		{
+			bStop = false;
+		}
+	},30)
+}
+		}
+	</script>
+</head>
+<body>
+	<ul id="ul1">
+			<li><img src="images/1.jpg" alt=""></li>
+			<li><img src="images/2.jpg" alt=""></li>
+			<li><img src="images/3.jpg" alt=""></li>
+			<li><img src="images/4.jpg" alt=""></li>
+			<li><img src="images/5.jpg" alt=""></li>
+			<li><img src="images/1.jpg" alt=""></li>
+			<li><img src="images/2.jpg" alt=""></li>
+			<li><img src="images/3.jpg" alt=""></li>
+			<li><img src="images/4.jpg" alt=""></li>
+			<li><img src="images/5.jpg" alt=""></li>
+		</ul>	
+</body>
+</html>
