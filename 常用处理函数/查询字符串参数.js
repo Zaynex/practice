@@ -20,6 +20,7 @@ function getQueryStringArgs(){
 	}
 	return args;
 }
-var args =  getQueryStringArgs();
 
-// console.log(args['q']);
+
+var w3w = "http://blog.sina.com.cn/s/blog_5082f7b901015r2r.html?key1=1";
+console.log(getQueryStringArgs(w3w));

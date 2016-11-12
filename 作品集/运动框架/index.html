@@ -81,29 +81,29 @@
 
 		];
 
-		var bOrder = true;
+		// var bOrder = true;
 		var i = 0;
-		oInput.disabled = false;
+		// oInput.disabled = false;
 		oInput.onclick = function(){
 			var oThis = this;
 			oThis.disabled = true;
 			function begin(){
-				bOrder ?　i++ : i--;
+				i< aData.length ? i++ : i--;
 				var obj = new Animate(oSpan, aData[i], begin);
 				if(i == aData.length || i < 0) {
 					clearInterval(obj.timer);
 					bOrder = !bOrder;
-					oThis.value = bOrder ? "\u5f00\u59cb" : "\u539f\u8def\u8fd4\u56de";
-					oThis.disabled = false;
+					// oThis.value = bOrder ? "\u5f00\u59cb" : "\u539f\u8def\u8fd4\u56de";
+					// oThis.disabled = false;
 					return;
 				}
 			}
 			begin();
 		};
-		oInput.onfocus = function ()
-		{
-			this.blur();	
-		}
+		// oInput.onfocus = function ()
+		// {
+		// 	this.blur();	
+		// }
 	};
 	</script>
 </body>

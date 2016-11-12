@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<ul class="ul" onclick='console.log("hh")'>
+		<li class="li"></li>
+		<li class="li"></li>
+		<li class="li"></li>
+	</ul>
+	<div class="demo">哈哈
+	</div>
+	<script>
+
+		window.onload = function(){
+			ul = document.querySelector(".ul");
+			demo = document.querySelector(".demo");
+			var deepList = ul.cloneNode(true);
+			demo.appendChild(deepList);
+			ul.onmouseover = function(){
+				console.log("onmouseover");
+			}
+		}
+		var  a  =10;
+		function test(){
+			console.log(a);
+			var a = 15;
+			console.log(a);
+		}
+		test();
+	</script>
+</body>
+</html>
