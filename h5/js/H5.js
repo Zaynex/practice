@@ -1,5 +1,6 @@
 /* 内容管理对象 */
-var jdata = [];
+var jdata = [];//这里是用于获取在Index.html里填写的json数据
+
 var H5 =function ( ) {
     this.id = ('h5_'+Math.random()).replace('.','_');
     this.el = $('<div class="h5" id="'+this.id+'">').hide();
@@ -16,10 +17,10 @@ var H5 =function ( ) {
         jdata.push({isPage:true,name:name, text:text});
         var page = $('<div class="h5_page section">');
 
-        if( name != undefined ){
+        if( name !== undefined ){
             page.addClass('h5_page_'+name);
         }
-        if( text != undefined ){
+        if( text !== undefined ){
             page.text(text);
         }
         this.el.append(page);
@@ -30,7 +31,7 @@ var H5 =function ( ) {
             this.whenAddPage();
         }
         return this;
-    }
+    };
 
     /* 新增一个组件 */
     this.addComponent = function(name, cfg){

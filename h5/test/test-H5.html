@@ -22,7 +22,7 @@
 //测试内容组织功能，以及fullPage页面切换&&组件切换
 		$(function(){
 			var h5 = new H5();
-			h5.addPage('face', '首页')
+			h5.addPage('page-1', '首页')
 				.addComponent("logo", {
 					text:'logo',
 					width: 400,
@@ -39,7 +39,7 @@
 					css:{backgroundColor:"green",top:300},
 					center: true,
 				})
-			.addPage('desc', "核心理念")
+			.addPage('page-2', "核心理念")
 				.addComponent('caption',{
 					text:"核心理念",
 					width: 400,
@@ -48,7 +48,7 @@
 					center: true
 			})
 			.addPage("page-3", "还不错的界面")
-				.addComponent("caption",{
+				.addComponent("course",{
 					text:"课程方向分布",
 					width: 400,
 					height: 100,

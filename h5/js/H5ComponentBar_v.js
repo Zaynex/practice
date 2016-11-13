@@ -9,8 +9,6 @@ var H5ComponentBar_v = function(name, cfg){
 
   $.each(component.find('.rate'), function(){
     var w = $(this).css('width');
-    console.log($(this));
-    console.log(w);
     $(this).height(w).width(width + "%");
   });
 

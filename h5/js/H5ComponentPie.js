@@ -134,22 +134,23 @@ var H5ComponentPie = function(name, cfg){
   draw(0);
   component.on('onLoad',function(){
     //  饼图生长动画
-      var s = 0;
-      for( i=0;i<100;i++){
-        setTimeout(function(){
-            s+=.01;
-            draw(s);
-        },i*10+500);
+      for(i = 0; i <100; i++){
+        (function(i){
+          setTimeout(function(){
+            draw(i/100+0.1);
+            console.log(i);
+          }, i*10 + 500);
+        })(i)
       }
   });
   component.on('onLeave',function(){
     //  饼图退场动画
-      var s = 1;
-      for( i=0;i<100;i++){
-        setTimeout(function(){
-            s-=.01;
-            draw(s);
-        },i*10);
+      for(i = 0; i < 100; i++){
+        (function(i){
+          setTimeout(function(){
+            draw(1-i/100);
+          }, i*10);
+        })(i)
       }
   });
   return component;

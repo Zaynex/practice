@@ -16,8 +16,6 @@ var H5ComponentPolyline = function(name, cfg){
   ctx.lineWidth = 1;
   ctx.strokeStyle = "#AAAAAA";
   var step = 10;//这里要加1是因为数值是在坐标点上的
-
-  window.ctx = ctx;
   for(var i = 0; i < step + 1; i++){
     var y = (h/step) * i;
     ctx.moveTo(0, y);
@@ -30,7 +28,7 @@ var H5ComponentPolyline = function(name, cfg){
   for(var i = 0; i < step + 1; i++){
     var x = (w/step) * i;
     ctx.moveTo(x, 0);
-    ctx.lineTo(x, h);
+    ctx.lineTo(x, h); 
     if(cfg.data[i]){
       var text = $('<div class="text"></div>');
       text.text(cfg.data[i][0]);
@@ -45,7 +43,7 @@ var H5ComponentPolyline = function(name, cfg){
   
   /**
    * 折线图数据层
-   *@param  {floot} per 0到1之间的数据，会根据这个值绘制最终数据对应的中间状态
+   *@param  {float} per 0到1之间的数据，会根据这个值绘制最终数据对应的中间状态
    * @return {DOM}     Component元素
    */
     var cns = document.createElement('canvas');
@@ -107,9 +105,8 @@ var H5ComponentPolyline = function(name, cfg){
       var item = cfg.data[i];
       x = row_w * i + row_w;
       y = h -(item[1] * h * per);
-      //这里判断应该是有问题的，如果不存在颜色参数就会判断到后面的参数，所以在传入的时候需要把颜色参数为空,我用null表示
       ctx.font = "bold 1.9em Arial";
-      ctx.fillStyle = item[2]? item[2] : "#595959";//其实这里判断不合理的
+      ctx.fillStyle = typeof item[2] === 'string' ? item[2] : "#595959";
       ctx.fillText( ( (item[1]*100)>>0) + "%", x-10, y-20);
     }
     ctx.stroke();
@@ -118,22 +115,27 @@ var H5ComponentPolyline = function(name, cfg){
 
     component.on('onLoad', function(){
       //折线图生长动画
-      var s = 0;
+      //优化折线生长动画，使用闭包
+      // var s = 0;
       for(i = 0; i <100; i++){
-        setTimeout(function(){
-          s += .01;
-          draw(s);
-        }, i*10 + 500);
+        (function(i){
+          setTimeout(function(){
+            // s += .01;
+            // draw(s);
+            draw(i/100);
+            // console.log(i);
+          }, i*10 + 500);
+        })(i)
       }
     });
 
     component.on('onLeave', function(){
-      var s = 1;
       for(i = 0; i < 100; i++){
-        setTimeout(function(){
-          s -= .01;
-          draw(s);
-        }, i*10);
+        (function(i){
+          setTimeout(function(){
+            draw(1-i/100);
+          }, i*10);
+        })(i)
       }
     });
 

@@ -14,15 +14,16 @@ var H5= function(){
         }
         this.el.append(page);
         this.page.push(page);
+        console.log(page);
         return this;
     };
 
     this.addComponent = function(name, cfg){
         var cfg = cfg || {};
         //暂时还不需要
-        // cfg = $.extend({
-        //     type: 'base'
-        // }, cfg);
+        cfg = $.extend({
+            type: 'base'
+        }, cfg);
 
         var component;
         var page = this.page.slice(-1)[0];

@@ -120,6 +120,6 @@ gulp.task('watchimage', function(){
 //         .pipe(imagemin({
 //             progressive: true
 //         }))
-//         .pipe(gulp.dest('h5build/images'))
+//         .pipe(gulp.dest('h5build/imgs'))
 // })
 gulp.task('default', ['watchjs','watchcss','watchimage']);

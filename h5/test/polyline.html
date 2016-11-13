@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			padding: 0;
+			margin: 0;
+		}
+		.demo{
+			width: 300px;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+<div class="demo">	
+	<canvas id="context" width="300" height="300"></canvas>
+</div>
+	<script>
+		var ctx = document.querySelector('#context');
+		ctx = ctx.getContext("2d");
+		ctx.beginPath();
+	  ctx.lineWidth = 1;
+	  ctx.strokeStyle = "#AAAAAA";
+	  var step = 10;
+	  var h = 300;
+	  var w = 300;
+	  window.ctx = ctx;
+	  for(var i = 0; i < step + 1; i++){
+	    var y = (h/step) * i;
+	    ctx.moveTo(0, y);
+	    ctx.lineTo(w, y);
+	  }
+	  ctx.stroke();
+
+	  var step = 5+1;
+	</script>
+</body>
+</html>
