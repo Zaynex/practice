@@ -1,0 +1,2 @@
+var H5ComponentBar=function(a,d){var n=new H5ComponentBase(a,d);return $.each(d.data,function(a,d){var e=$('<div class="line"></div>'),s=$('<div class="name"></div>'),i=$('<div class="rate"></div>'),p=$('<div class="per"></div>'),v=100*d[1]+"%",c=$('<div class="bg"></div>');i.append(c),d[2]&&c.css("background-color",d[2]),i.css("width",v),s.text(d[0]),p.text(v),e.append(s).append(i).append(p),n.append(e)}),n};
+//# sourceMappingURL=H5ComponentBar.js.map
