@@ -1,0 +1,1 @@
+{"version":3,"sources":["H5ComponentBase.css"],"names":[],"mappings":"AACA,cACC,gBAAA,KACA,kBAAA,UACA,SAAA","file":"H5ComponentBase.css","sourcesContent":["\r\n.h5_component{\r\n\tbackground-size: 100%;\r\n\tbackground-repeat: no-repeat;\r\n\tposition: absolute;\r\n}"]}
