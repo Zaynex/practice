@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+  background: #f06d06;
+  font-size: 80%;
+}
+
+table {
+  background: white;
+  width: 240px;
+  border-collapse: separate;
+  margin: 20px;
+  height: 250px;
+}
+
+table td {
+  background: black;
+  color: white;
+  padding: 20px;
+  border: 10px solid white;
+  default is vertical-align: middle;
+}
+
+.center-table {
+  display: table;
+  height: 250px;
+  background: white;
+  width: 240px;
+  margin: 20px;
+}
+.center-table p {
+  display: table-cell;
+  margin: 0;
+  background: black;
+  color: white;
+  padding: 20px;
+  border: 10px solid white;
+   vertical-align: middle; 
+}
+	</style>
+</head>
+<body>
+	<table>
+  <tr>
+    <td>
+      I'm vertically centered multiple lines of text in a real table cell.
+    </td>
+  </tr>
+</table>
+
+<div class="center-table">
+  <p>I'm vertically centered multiple lines of text in a CSS-created table layout.</p>
+</div>
+</body>
+</html>

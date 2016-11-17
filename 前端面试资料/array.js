@@ -37,3 +37,12 @@ function uniqueArr3(arr){
 	return data;
 }
 
+var object = {
+        name : "My Object",
+        getNameFunc : function(){
+            return function(){
+                return name;
+            };
+        }
+    };
+    console.log(object.getNameFunc()());

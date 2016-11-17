@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		 .clip{text-overflow:clip; overflow:hidden; white-space:nowrap; 
+   width:200px;background:#ccc;} 
+ .ellipsis{text-overflow:ellipsis; overflow:hidden; white-space:nowrap; 
+   width:200px; background:#ccc;} 
+	</style>
+</head>
+<body>
+	<div style="width:300px; border:1px solid #999999; overflow: hidden"> 
+ wordwrapbreakwordwordwrapbreakwordwordwrapbreakwordwordwrapbreakword 
+ </div> 
+
+
+ <div style="width:300px; border:1px solid #999999; word-wrap:break-word;"> 
+ wordwrapbreakwordwordwrapbreakwordwordwrapbreakwordwordwrapbreakword 
+ </div>
+
+
+ <div class="clip"> 
+  不显示省略标记，而是简单的裁切条
+ </div> 
+
+ <div class="ellipsis"> 
+  当对象内文本溢出时显示省略标记
+ </div>
+</body>
+</html>
