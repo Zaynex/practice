@@ -45,6 +45,7 @@ var H5ComponentPie = function(name, cfg){
     var item = cfg.data[i];
     var color = item[2] || (item[2] = colors.pop());
     
+    //计算每个数据占据的角度
     eAngel = sAngel + aAngel * item[1];
 
 
@@ -58,6 +59,8 @@ var H5ComponentPie = function(name, cfg){
     ctx.arc(r,r,r, sAngel, eAngel);
     ctx.fill();
     ctx.stroke();
+
+    //重新修改起始角度，让当前的结束角度是下一个数据的起始角度
     sAngel = eAngel;
 
     //加入所有项目的文本以及百分比
@@ -68,8 +71,7 @@ var H5ComponentPie = function(name, cfg){
     text.append(per);
     var x = r + Math.sin(0.3*Math.PI-sAngel) * r;
     var y = r + Math.cos(0.3*Math.PI-sAngel) * r;
-
-
+ 
     if(x > w/2){
       text.css('left', x/2);
     }else{
@@ -87,7 +89,7 @@ var H5ComponentPie = function(name, cfg){
     component.append(text);
   }
 
-  //蒙版层
+  //蒙版层用于实现动画的数据显示
   var cns = document.createElement('canvas');
   var ctx = cns.getContext('2d');
   cns.width = ctx.width = w;
@@ -101,20 +103,14 @@ var H5ComponentPie = function(name, cfg){
   ctx.strokeStyle='#eee';
   ctx.lineWidth = 1;
 
-
-  // ctx.arc(r,r,r,0,2*Math.PI);
-  // ctx.fill();
-  // ctx.stroke();
-
   var draw = function(per){
-
     ctx.clearRect(0,0, w, h);
-
     ctx.beginPath();
     ctx.moveTo(r, r);
 
 
     if(per <= 0){
+      //如果小于0,不显示
       ctx.arc(r, r, r, 0, 2*Math.PI);
       component.find('.text').css('opacity',0);
     }else{
@@ -134,10 +130,10 @@ var H5ComponentPie = function(name, cfg){
   draw(0);
   component.on('onLoad',function(){
     //  饼图生长动画
-      for(i = 0; i <100; i++){
+      for(i = 0; i <=100; i++){
         (function(i){
           setTimeout(function(){
-            draw(i/100+0.1);
+            draw(i/100);
             console.log(i);
           }, i*10 + 500);
         })(i)

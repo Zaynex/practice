@@ -109,7 +109,7 @@ var H5ComponentRadar = function(name, cfg){
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, 2*Math.PI);
       ctx.fill();//填充颜色
-      ctx.closePath();//如果已经闭合，什么也不不做
+      ctx.closePath();//连线
     }
 
   };
