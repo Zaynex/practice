@@ -43,3 +43,30 @@ function classof(o) {
 	if( o === undefined) return "Undefined";
 	return Object.prototype.toString.call(o).slice(8, -1);
 }
+
+
+//返回在a数组中出现x的所有索引
+function findAll(a,x ) {
+	var results = [],
+		len = a.length,
+		pos = 0;
+
+	while( pos < len ) {
+		pos = a.indexOf(x, pos)
+		if(pos === -1) break;
+		results.push(pos);
+		pos = pos + 1;
+	}
+	return results
+}
+
+isArray = Function.isArray || function(o) {
+	return typeof o === 'object' && Object.prototype.toString().call(o) === "[object Array]";
+}
+
+function isArrayLike(o) {
+	if(o && typeof o === 'object' && ifFinite(o.length) && o.length >= 0 && o.length === Math.floor(o.length) && o.length < 4294967296)
+		return true;
+	else 
+		return false;
+}
