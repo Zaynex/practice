@@ -70,3 +70,31 @@ function isArrayLike(o) {
 	else 
 		return false;
 }
+
+// var Coin = enumeration({Penny: 1, Nickel:5, Dime:10, Quarter:25});
+// var c = Coin.Dime;
+
+function enumeration(namesToValues) {
+	var enumeration = function() { throw 'Cannot Instantiate enumeration'};
+	var proto = enumeration.prototype = {
+		constructor: enumeration,
+		toString: function () {return this.name; },
+		valueOf: function() {return this.value },
+		toJSON: function() {return this.name},
+	};
+
+	enumeration.values = [];
+	for(name in namesToValues) {
+		var e = inherit(proto);
+		e.name = name;
+		e.value = namesToValues[names];
+		enumeration[name] = e;
+		enumeration.values.push(e);
+	}
+
+	enumeration.foreach = function(f, c) {
+		for(var i = 0; i < this.values.length; i++) f.call(c, this.values[i]);
+	};
+
+	return enumeration;
+}
