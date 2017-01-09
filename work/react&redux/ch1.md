@@ -18,4 +18,5 @@ Redux 规定，须先复制一份 state，在副本 nextState 上进行修改操
 在ES6中创建 React组件时，组件方法不再自动绑定this。需要手动绑定。
 在之前，React.createClass() 会自动绑定this.
 
-当渲染子组件时 React 会要求你使用key属性来指定每个子组件
+当渲染子组件时 React 会要求你使用key属性来指定每个子组件。
+
