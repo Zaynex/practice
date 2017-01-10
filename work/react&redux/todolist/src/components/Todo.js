@@ -42,4 +42,4 @@ class Todo extends Component{
 			</li>
 		)
 	}
-}	
+}
