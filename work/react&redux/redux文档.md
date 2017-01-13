@@ -215,3 +215,73 @@ createStore() 的第二个参数是可选的, 用于设置 state 初始状态。
 ```
 let store = createStore(todoApp, window.STATE_FROM_SERVER)
 ```
+
+
+### bindActionCreators(actionCreators, dispatch)
+使用 `bindActionCreators` 的场景是当你需要把 `action creator` 往下传到一个组件上，却不想让这个组件觉察到 `Redux` 的存在，而且不希望把 Redux store 或 `dispatch` 传给它。
+
+参数
+1. actionCreators (Function or Object): 一个 action creator，或者键值是 action creators 的对象。
+2. dispatch (Function): 一个 dispatch 函数，由 Store 实例提供。
+
+返回值
+一个与原对象类似的对象，只不过这个对象中的的每个函数值都可以直接 dispatch action。如果传入的是一个函数，返回的也是一个函数。
+
+action.js
+```
+export function addTodo(text) {
+  return {
+    type: 'ADD_TODO',
+    text
+  };
+}
+
+export function removeTodo(id) {
+  return {
+    type: 'REMOVE_TODO',
+    id
+  };
+}
+```
+
+SomeComponent.js
+```js
+import * as TodoActionCreators from './TodoActionCreators';
+class TodoListContainer extends Component {
+  componentDidMount() {
+    let {dispatch} = this.props
+
+    //如下是行不通的
+    //TodoListContainer.addTodo('use Redux')
+    // 因为只是创建了action方法而已，还没有触发所以还需要dispatch
+  
+    //如下是可行的
+    let action = TodoAactionCreators.addTodo('use Redux')
+    dispatch(action)
+  }
+  render() {
+    let {todos, dispatch} = this.props
+
+    let boundActionCreators = boundActionCreators(TodoActionCreators, dispatch)
+    console.log(boundActionCreators)
+    // {
+    //   addTodo: Function,
+    //   removeTodo: Function
+    // }
+
+    return (
+      <TodoList todos={todos}
+                {...boundActionCreators} //>
+    )
+  // 一种可以替换 bindActionCreators 的做法是直接把 dispatch 函数
+    // 和 action creators 当作 props 
+    // 传递给子组件
+    // return <TodoList todos={todos} dispatch={dispatch} />;
+  }
+}
+export default connect(
+  state => ({ todos: state.todos })
+)(TodoListContainer)
+```
+
+看完了文档的介绍发现其实就是把action函数做了层dispatch处理，这样传进去的action 就可以被调用了。
