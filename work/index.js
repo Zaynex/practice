@@ -75,3 +75,131 @@ function response(data) {
 任务处理是在当前事件循环tick结尾处，但是定时器触发是为下一个事件循环tick.
 Promise用的是任务处理。
 
+
+doA(function(){
+	doB();
+	doC(function(){
+		doD()
+	})
+	doE()
+})
+
+doF();
+
+执行顺序
+doA()
+doF()
+doB()
+doC()
+doE()
+doD()
+
+
+理解回调函数的执行顺序
+
+
+//bad
+function addNumber(x,y) {
+	return x + y
+}
+
+addNumber(21, 21);
+addNumber(21,"21");
+
+
+//strict
+function addNumber(x,y) {
+	if(typeof x != 'number' || typeof y != 'number') {
+		throw Error('bad parameters')
+	}
+	return x + y
+}
+
+
+//friendly
+function addNumber(x, y){
+	x = Number(x);
+	y = Number(y);
+
+	return x + y
+}
+
+addNumber(1,12);
+addNumber(1,"12");
+
+对类型检查/规范化的过程特别重要，只有这样才能产生完全信任的代码。
+
+function timeoutify(fn, delay) {
+	var intv = setTimeout(function() {
+		intv = null
+		fn(new Error("timeout!"))
+	},delay)
+
+	return function(){
+		if(intv) {
+			clearTimeout(intv)
+			fn.apply(this,arguments)
+		}
+	}
+}
+
+
+
+function result(data) {
+	console.log(a)
+}
+
+var a = 0
+ajax('..pre-url', result)
+a++;
+
+这段代码的问题是不确定 打印的结果到底是 a = 0 还是 a = 1
+
+使用异步就不会有这个问题。
+
+function asyncify(fn) {
+	var orig_fn = fn,
+		intv = setTimeout(function() {
+			intv = null
+			if(fn) fn()
+		}, 0);
+
+	fn = null
+	return function(){
+		// 触发太快，在定时器intv触发指示异步转换前发生？
+		if(intv) {
+			fn = orig_fn.bind.apply(
+				orig_fn,
+				[this].concat([].slice.call(arguments))
+			)
+		}
+		//如果已经是异步
+		else {
+			orig_fn.apply(this, arguments)
+		}
+	}
+}
+
+function result(data) {
+	console.log(a)
+}
+
+var a = 0
+
+ajax('..pre-url', asyncify(result));
+a++
+
+
+Promise (承诺)
+
+就拿楼下的那家牛肉面馆来说，你点了碗牛肉刀削，交给收银员15元。通过这个场景下单，就是对某个值（牛肉刀削）发起请求，启动了一次交易。
+但是我们不能马上得到这碗牛肉刀削，收银员会给我们收据来代替牛肉刀削。这个收据其实就是承诺（promise)。
+保证了最终我们会得到牛肉刀削。
+
+所以我们要保存好收据，等到收银员叫号时就咱们吃的就到了。
+
+但是在等待的过程中依然可以做很多事情，比如叫朋友过来一起吃牛肉刀削。
+
+一旦我要的值准备好了（牛肉刀削）,我就用我的promise(收据)换取这个值。
+不过还有另外一种状态，就是可能你凭着订单去领的时候告诉你已经刀削已经没了，这个时候就失败了。
+

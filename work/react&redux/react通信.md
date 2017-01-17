@@ -13,7 +13,16 @@
 
 跨组件通信
 1.采用高阶组件的形式
-2.采用context去获取（但如果嵌套较多时，不建议采用该方式）
+2.采用context去获取（但如果嵌套较多时，不建议采用该方式）比较适合真正的全局信息（比如网站界面主题和用户信息等）
+用法：
+在实例化的时候在子组件定义
+static contextTypes = {
+    router: PropTypes.object.isRequired
+}
+
+就可以访问父组件的
+this.context.router（和props一样）
+而且是跨域多层父组件的，不像props需要层级需要多次传入。
 
 无嵌套关系的组件间通信
 
