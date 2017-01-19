@@ -209,3 +209,46 @@ Promise (承诺)
 等待中
 
 
+
+Promise特点：
+防止回调过早：即便是立即完成的Promise(类似于new Promise(function)((resolve){resolve(42)}))返回的是异步结果。所以不需要再通过setTimeout(...,0)这种hack手段来处理。也就是说即使Promise调用then时,即使Promise已经决议，提供给then的回调函数也会被异步调用。
+
+调用过晚：因为Promise的then()注册的观察回调函数会被自动调度，因此这些被调度的回调在一下个异步事件点上一定会被触发。
+
+
+p.then(function(){
+	p.then(function(){
+		console.log("c")
+	})
+	console.log('b')
+})
+p.then(function(){
+	console.log("a")
+})
+
+
+执行顺序：
+b a c
+
+注意点是两个独立的Promise链接上的回调函数的相对顺序是无法预测的。
+
+
+回调未调用：虽然Promise在决议时总会执行完成回调或拒绝回调的其中一个。但Promise依然提供解决方案，那就是竞态
+
+function timeoutPromise(delay) {
+	return new Promise(function(reslove, reject) {
+		setTimeout(function() {
+			reject('timeout')
+		}, delay)
+	})
+}
+
+Promise.race([
+	foo(), timeoutPromise(3000)
+	])
+	.then(function(){
+		//.. 及时完成
+	}, function(err) {
+		// foo被拒绝
+		//查看err了解哪种情况
+	})
