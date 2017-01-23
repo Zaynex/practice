@@ -23,6 +23,9 @@ function *foo(){
 function bar(){
 	x++
 }
+
+
+//yield 产出的意思
 // 构造一个迭代器it控制这个生成器
 var it = foo();
 it.next(); //启动了生成器*foo()，并运行生成器的第一行 x++
@@ -31,6 +34,41 @@ x;
 bar();
 x;
 it.next(); // 调用it.next从暂停处恢复了生成器*foo() 的执行，并运行console.log
+
+
+Generator函数的调用方法与普通函数一样，也是在函数名后面加上一对圆括号。不同的是，调用Generator函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象
+，即遍历器对象（Iterator Object）。
+下一步，必须调用遍历器对象的next方法，使得指针移向下一个状态。也就是说，每次调用next方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个yield语句（或return语句）为止。换言之，Generator函数是分段执行的，yield语句是暂停执行的标记，而next方法可以恢复执行。
+
+
+
+yield 语句就是暂停标志。
+1. 遇到yield语句，就暂停执行后面的操作，并将紧跟在yield后面的那个表达式的值，作为返回的对象的value属性值。
+2. 下次调用next方法时并且传入相应的参数，暂停执行后面的操作，并将紧跟在yield后面的那个表达式的值就是next中传入的参数
+3. 如果没有再遇到新的yield语句，就一直运行到函数结束，直到return语句为止，并将return语句后面的表达式的值，作为返回的对象的value属性值。
+4. 如果该函数没有return语句，则返回的对象的value属性值为undefined。
+
+
+function *f(){
+	console.log('执行了')
+}
+
+var generator = f()
+setTimeout(function(){
+	generator.next()
+},2000)
+
+function *fibonacci(){
+	let [prev, curr] = [0, 1];
+	for(;;) {
+		[prev, curr] = [curr, prev+curr];
+		yield curr
+	}
+}
+for(let n of fibonacci()){
+	if(n > 1000) break;
+	console.log(n)
+}
 
 
 
@@ -260,7 +298,7 @@ it.next()
 
 function *main(){
 	var x = yield 'hello world';
-	yield x.toLowerCase()
+	yield x.toLowerCase()	
 }
 var it = main()
 it.next().vaue
@@ -280,4 +318,170 @@ function foo(x, y) {
 	return request('http://some.url.1/?x=' + x "&y=" + y)
 }
 
-function
+function *main() {
+	try{
+		var text = yield foo(11, 21)
+		console.log(text)
+	}
+	catch(err) {
+		console.log(err)
+	}
+}
+
+//运行生成器
+va it = main()
+
+var p = it.next().value
+
+p.then(function(text){
+	it.next(text)
+}, function(err){it.throw(err)})
+
+
+
+function run(gen){
+	var args = [].slice.call(arguments, 1), it;
+
+	// 在当前上下文中初始化生成器
+	it = gen.apply(this, args)
+
+	// 返回一个promise用于生成器完成
+	return Promise.resolve()
+		.then(function handleNext(value){
+			// 对下一个yield出的值运行
+			var next = it.next(value)
+
+			return (function handleResult(next){
+				//生成器运动完毕了吗
+				if(next.done) {
+					return next.value
+				} else {
+					return Promise.resolve(next.value).then(handleNext,
+
+						function handleErr(err){
+							return Promise.resolve(it.throw(err)).then(handleResult)
+						})
+				}
+			})(next);
+		})
+}
+
+
+
+
+
+//  实在看不懂了，重新看下es6的文档
+
+var it = makeIterator(['a', 'b'])
+
+it.next()
+
+function makeIterator(array){
+	var nextIndex = 0
+	return {
+		next: function() {
+			return nextIndex < array.length ?
+			{value: array[nextIndex++], done: false} : {value: undefined, done: true}
+		}
+	}
+}
+
+
+function *foo(){
+	var r1 = yield request('http://some.url.1')
+	var r2 = yield request('http://some.url.2')
+
+	var r3 = yield request('http://some.url.3?v='+r1 + ',' + r2)
+	console.log(r3)
+}
+run(foo)
+
+// 这种方式的缺陷就是 它们是依次执行的，请求完url1之后，再请求 url2
+// 我们希望它们是并行发出的
+
+function *foo(){
+	var p1 = request('http://some.url.1');
+	var p2 = request('http://some.url.2');
+
+	var r1 = yield p1;
+	var r2 = yield p2;
+	var r3 = yield request('http://some.url.3?v='+r1 + ',' + r2);
+	console.log(r3)	
+}
+
+run(foo)
+
+// p1 和 p2 是并发执行（即“并行”）的用于 Ajax 请求的
+// promise。哪一个先完成都无所谓，因为 promise 会按照需要在决议状态保持任意长时间
+
+// 然后我们使用接下来的两个 yield 语句等待并取得 promise 的决议（分别写入 r1 和 r2 ）。如果 p1 先决议，那么 yield
+// p1 就会先恢复执行，然后等待 yield p2 恢复。如果 p2 先决议，它就会耐心保持其决议值等待请求，但是 yield p1 将
+// 会先等待，直到 p1 决议。
+// 不管哪种情况，p1 和 p2 都会并发执行，无论完成顺序如何，两者都要全部完成，然后才会发出 r3 = yield request..
+// Ajax 请求。
+
+function *foo(){
+	var results = yield Promise.all([
+			request('http://some.url.1'),
+			request('http://some.url.1')
+		]);
+	var r1 = results[0];
+	var r2 = results[1];
+	var r3 = yield request('http://some.url.1?v=' +r1 +','+r2 )
+	console.log(r3)
+}
+run(foo)
+
+
+
+
+委托
+
+function *foo() {
+	console.log("foo stating");
+	yield 3;
+	yield 4;
+	console.log("foo finished");
+}
+
+function *bar() {
+	yield 1;
+	yield 2;
+	yield *foo();
+	yield 5;
+}
+
+var it = bar();
+it.next().value // 1
+it.next().value // 2
+it.next().value // foo stating 3
+
+it.next().value // 4
+it.next().value // foo finished 5
+
+
+function *foo() {
+	console.log("inside *foo():", yield "B");
+	console.log("inside *foo():", yield "C");
+
+	return "D";
+}
+
+function *bar(){
+	console.log("inside *bar():", yield "A");
+	console.log("inside *bar()", yield *foo());
+	console.log("inside *bar()", yield "E")
+	return "F";
+}
+
+var it = bar();
+console.log("outside:", it.next().value);
+
+console.log("outside:", it.next(1).value);
+
+console.log("outside:", it.next(2).value);
+
+console.log("outside:", it.next(3).value);
+
+console.log("outside:", it.next(4).value);
+
