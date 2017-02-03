@@ -65,3 +65,12 @@ export default function createContainer(mapStateToProps, mapActionCreators, comp
 如果最后没有传入这个参数，那会怎样？
 
 onEnter就是在跳转相应的路由时可以进行适当的权限验证
+
+2017/2/3
+今天遇到的问题。
+一个文本框输入时，每次输入都会call api。加上了函数去抖之后，是过一段时间再call多个api。
+目前是过一段时间后call的api参数是递增的，不是最后的保留值。
+
+希望达到效果
+1. 三秒后call 的 api的值是最后的结果
+2. 三秒内只call一次。
