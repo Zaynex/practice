@@ -5,61 +5,71 @@
 	<title>Document</title>
 </head>
 <body>
+	<button id="button1">刷新</button>
+	<button id="button2">新增</button>
+	<button id="button3">删除</button>
 	<script>
-/*
-单例模式： 保证一个类仅有一个实例，并提供一个访问它的全局访问点。
-通常用于全局缓存，浏览器中的window对象等。
+/**
+ * 解耦请求调用者和请求接受者之间的关系
  */
 
+var button1 = document.getElementById("button1");
+var button2 = document.getElementById("button2");
+var button3 = document.getElementById("button3");
 
-/*
-这种方式的缺点就是需要通过额外的方法去获得
- */
-var Singleton = function(name){
-	this.name = name;
-	this.instance = null;
+// 虽然点击之后触发什么逻辑我们不清楚，但是我们知道点击按钮之后都会执行一些操作
+var setCommand = function(button, command) {
+	button.onclick = function(){
+		command.excute();
+	}
 }
 
-Singleton.prototype.getName = function(){
-	console.log(this.name);
+var MenuBar = {
+	refresh: function(){
+		console.log("刷新菜单目录")
+	}
+}
+var SubMenu = {
+	add: function(){
+		console.log("增加子菜单")
+	},
+	del: function(){
+		console.log("删除子菜单")
+	}
 }
 
-Singleton.getInstance = function(name){
-	if(!this.instance){
-		this.instance = new Singleton(name);
-	}
-	return this.instance
+// 将所有行为都封装在命令中
+var RefreshMenuBarCommand = function(receiver) {
+	this.receiver = receiver;
 }
 
-var a = Singleton.getInstance('seven');
-var b = Singleton.getInstance('www');
-console.log(a);
-console.log(b);
+RefreshMenuBarCommand.prototype.excute = function(){
+	this.receiver.refresh()
+}
+
+var AddSubMenuCommand = function(receiver){
+	this.receiver = receiver;
+}
+
+AddSubMenuCommand.prototype.excute = function(){
+	this.receiver.add()
+}
+var DelSubMenuCommand = function(receiver){
+	this.receiver = receiver
+}
+DelSubMenuCommand.prototype.excute = function(){
+	// console.log("删除子菜单")
+	this.receiver.del();
+}
 
 
-var CreateDiv = (function(){
-	var instance;
-	
-	var CreateDiv = function(html) {
-		if(instance) {
-			return instance
-		}
-		this.html = html;
-		this.init();
-		return instance = this;
-	}
+var refreshMenuBarCommand = new RefreshMenuBarCommand(MenuBar);
+var addSubMenuCommand = new AddSubMenuCommand(SubMenu);
+var delSubmenuCommand = new DelSubMenuCommand(SubMenu);
 
-	CreateDiv.prototype.init = function(){
-		var div = document.createElement("div");
-		div.innerHTML = this.html;
-		document.body.appendChild(div);
-	}
-
-	return CreateDiv
-})();
-
-var a = new CreateDiv('sven1');
-var b = new CreateDiv('sven2');
+setCommand(button1, refreshMenuBarCommand);
+setCommand(button2, addSubMenuCommand);
+setCommand(button3, delSubmenuCommand);
 	</script>
 </body>
 </html>
