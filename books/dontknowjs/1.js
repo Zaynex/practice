@@ -32,5 +32,7 @@ arr = Array.from(arguments);
 
 
 var a = 'abc';
+// var a = new String('abc');
 Array.prototype.reverse.call(a);// Cannot assign to read only property '0' of object '[object String]'
+// 由于返回值仍然是字符串"foo"的一个封装对象
 console.log(a);
