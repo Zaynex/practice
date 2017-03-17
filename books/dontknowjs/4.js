@@ -1,4 +1,19 @@
 /**
+ * ~ 和 ! ，前者不仅做强制类型转换为布尔值，还进行字位反转，返回2的补码
+ * ~x = -(x+1)
+ */
+
+
+var a = 'loll'
+if(~a.indexOf('lo')) {
+	// if 匹配
+}
+// if(a.indexOf('lo')>-1) {
+// 	// 匹配
+// }
+
+
+/**
  * 强制类型转换
  *
  */
@@ -57,16 +72,35 @@ String(a); // "4"
  * b + "" -> toString
  */
 
+
+
 /**
- * ~ 和 ! ，前者不仅做强制类型转换为布尔值，还进行字位反转，返回2的补码
- * ~x = -(x+1)
+ * 如果想判断传入的若干个参数多少个true
  */
-var a = 'loll'
-if(~a.indexOf('lo')) {
-	// if 匹配
+
+function onlyOne() {
+	var sum = 0;
+	for(var i = 0; i < arguments.length; i++) {
+		sum += Number(!!arguments[i]);
+	}
+	return sum === 1;
 }
-// if(a.indexOf('lo')>-1) {
-// 	// 匹配
-// }
 
 
+// ES6中引入了Symbol类型，它的显示强制类型转换是允许的，
+// 但隐式类型转换会产生错误
+var s1 = Symbol("cool");
+String(s1); // "Symbol(cool)"
+var s2 = Symbol('not cool');
+s2  + "";// can't convert a Symbol value to a string
+
+
+// == 和 === 的正确说法
+//  == 允许做强制类型转换， === 不允许
+
+// 字符串和数字之间的比较时，会将字符串转换为数字
+ // 42 == "42"  
+// 对于 "42"字符串会做一个toNumber()转换
+// 如果是数字字符串类型，就会转换为数字，比如 Number("0x1a"); => 26
+
+// 布尔值与其他类型比较时，会把布尔值 -> ToNumber
