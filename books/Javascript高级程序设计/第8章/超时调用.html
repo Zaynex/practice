@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	window.onload=function(){
+		var setTimeoutId = setTimeout(function() {
+			alert("Hello,world");
+		}, 1000);	
+		clearTimeout(setTimeoutId);
+	}
+	//
+	//设置setTimeout()之后，该方法会返回一个数值ID，表示超时调用，可以用clearTimerout() 将超时调用id传递给它，取消超时调用。
+	//
+	//超时调用的代码都是在全局作用域中的，因此函数中this值在非严格模式下指向window对象，在严格模式下是 undefined。
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

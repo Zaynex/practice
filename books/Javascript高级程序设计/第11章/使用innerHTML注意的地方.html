@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		for (var i=0,len=values.length; i<len; i++){
+			ul.innerHTML += "<li>" + values[i] + "</li>";
+		}//避免循环操作，每次循环要从innerHTML读取一次信息，而设置innerHTML相当于创建HTML解析器，但是创建和销毁解析器也会带来很大性能损失。因此要将innerHTML访问次数控制在合理范围
+
+		//解决办法，单独构建字符串，然后一次性将结果字符串赋值给innerHTML.
+
+		var itemsHtml = "";
+		for (var i=0, len=values.length; i<len ;i++){
+			itemsHtml += "<li>" + values[i] + "</li>";
+		}
+		ul.innerHTML = itemsHtml;
+
+	</script>
+</body>
+</html>

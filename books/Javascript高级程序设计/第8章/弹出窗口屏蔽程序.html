@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+		var blocked = false;
+
+		try {
+			var wroxwin = window.open("http://www.zhihu.com " ,_blank);
+			if(wroxwin == null ){
+				blocked = true;
+			}
+		}catch (ex){
+				blocked = true;
+			}
+
+		if(blocked){
+			alert("The popup was blocked");
+		}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

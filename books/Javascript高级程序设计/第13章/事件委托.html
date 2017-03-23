@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+			var EventUil = {
+	addHandler : function(element, type, hander) {
+		if (element.addEventListener) {
+			element.addEventListener(type, hander, false);
+		} else if (element.attachEvent) {
+			element.attachEvent(type, hander);
+		} else {
+			element["on" + type] = hander;
+		}
+	}
+
+	removeHandler: function(element, type, hander) {
+		if(element.removeEventListener) {
+			element.removeEventListener(type ,hander, false);
+		} else if (element.detachEvent) {
+			element.detachEvent(type, hander);
+		}else {
+			else["on" + type] = null;
+		}
+	}
+	
+	getEvent:function(event) {
+		return event ? event : window.event;
+	},
+
+	getTarget: function(event) {
+		return event.target || event.srcElement;
+	}
+
+	preventDefault: function(event){
+		if(event.preventDefault){
+			event.preventDefault();
+		} else {
+			event.returnValue = false;
+		}
+	},
+
+	stopPropagation: function (event) {
+		if (event.stopPropagation){
+			event.stopPropagation();
+		} else {
+			event.cancelBubble = true;
+		}
+	}
+},
+		var item1 = document.getElementById("gosomewhere");
+		var item2 = document.getElementById('dosomething');
+		var item3 = document.getElementById('sayhi');
+
+		EventUil.addHandler(item1, "click", function  (event) {
+			location.href = "http://www.worx.com";
+		});
+		EventUil.addHandler(item2, "click", function (event){
+			document.title = "I changed the document title";
+		});
+		EventUil.addHandler(item3, "click", function  (event) {
+			alert("hi")
+		});
+		// 在一个负责的web应用程序中，对所有可单机的元素都采用该方式，将会造成大量代码
+		
+		使用事件委托，只在在DOM熟上尽量最高的层次上添加一个事件处理程序
+
+		var list = document.getElementById('mylinks');
+
+		EventUil.addHandler(list, "click", function  (event) {
+			event = EventUil.getEvent(event);
+			var target = EventUil.getTarget(event);
+
+			switch(target.id) {
+				case "dosomething" :
+					document.title = "I changed the document title";
+					break;
+				case "gosomewhere" :
+					location.href = "http://www.worx.com";
+					break;
+				case "sayhi" :
+					alert("hi")
+					break;
+			}
+		})
+	</script>
+</head>
+<body>
+	<ul id="mylinks">
+		<li id="gosomewhere">GO somewhere</li>
+		<li id="dosomething">Do something</li>
+		<li id="sayhi">Sayhi</li>
+	</ul>
+</body>
+</html>

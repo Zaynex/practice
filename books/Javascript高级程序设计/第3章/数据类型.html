@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<ol>
+		<li>只要意在保存对象的变量还没有保存对象就应该赋予null值，体现null值作为空对象指针的惯例，也有助于区分null和undefine </li>
+		<li>由于保存浮点数值需要的内存空间是整数的两倍，因此ECMAScript会自动将浮点转化为整数值</li>
+		<li>永远不要测试特定的浮点数值</li>
+		<li>0/0返回NaN,正数/0返回正无穷，负数/0返回负无穷0，而且NaN != NaN</li>
+	</ol>
+
+	<script>
+		console.log(0.1+0.2);
+		// 不要这样做，0.1+0.2会得到0.30000000000000004的结果
+
+
+		alert(typeof null);
+		alert(-1/0);
+	// null 会被认为是一个空的对象的引用（空对象指针）
+	</script>
+</body>
+</html>

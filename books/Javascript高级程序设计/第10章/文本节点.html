@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var element = document.createElement("div");
+		element.className = "message";
+
+		var textNode = document.createTextNode("Hello,world");
+		element.appendChild(textNode);
+
+		var anotherNode = document.createTextNode("Yippe");
+		element.appendChild(anotherNode);
+
+		document.body.appendChild(element);
+	//显示结果Hello,worldYippe，如果两个文本节点是相邻的同胞节点，那么这两个节点中的文本就会连起来显示，中间不会有空格
+
+
+		//使用规范化文本节点会使两个相邻的文本节点变成一个
+
+		document.writeln(element.childNodes.length);
+		element.normalize();
+		document.writeln(element.childNodes.length);
+		document.writeln(element.firstChild.nodeValue);
+	</script>
+</body>
+</html>

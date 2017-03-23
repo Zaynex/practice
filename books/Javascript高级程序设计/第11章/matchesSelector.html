@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function matchSelector(element, selector){
+			if(element.matchesSelector){
+				return element.matchSelector(selector);
+			}else if(element.msMatchesSelector){
+				return element.msMatchesSelector(selector);
+			}else if(element.mozMatchesSelector){
+				return element.mozMatchesSelector(selector);
+			}else if(element.webkitMatchesSelector){
+				return element.webkitMatchesSelector(selector);
+			}else {
+				throw new Error("Not supposed");
+			}
+		}
+		if (matchesSelector(document.body, "body.page1")){
+			//执行操作
+		}
+	</script>
+</body>
+</html>

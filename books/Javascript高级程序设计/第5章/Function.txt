@@ -1,0 +1,376 @@
+﻿函数名仅仅是指向函数的指针，因此函数名与包含对象指针的其他变量没什么不同。
+不带圆括号的函数名是访问函数指针，而非调用函数。
+
+function sum(num1, num2) {
+	return num1 + num2;
+}
+alert(sum(10,10));         //20
+var anotherSum = sum;
+alert(anotherSum(10,10));  //20
+sum = null ;
+alert(anotherSum(10,10));  //20
+
+
+
+
+
+
+没有重载
+将函数名想象成指针也就理解为什么ECMAScript没有重载了。
+
+function addSomeNumber(num) {
+	return num + 100;
+}
+function addSomeNumber(num) {
+	return num + 200;
+}
+
+var result = addSomeNumber(100);  //300
+创建第二个函数实际上是覆盖了引用第一个函数的变量 addSomeNumber
+
+
+
+
+函数声明与函数表达式
+
+解析器在执行环境中加载数据时，会率先读取函数声明，并使其在执行任何代码之前都可以用;至于函数表达式，则必须等到解析器执行到它所在的代码行，才会真的被执行。
+
+alert(sum(10, 10));
+function sum(num1, num2) {
+	return sum1 + sum2;
+}
+解析器通过函数声明提升的过程，读取并将函数声明添加到执行环境，因此上述代码可以正常运行。
+对代码求值时，JavaScript引擎在第一遍会声明函数并将它们放到源代码树的顶部。
+
+但是像下面的代码就会出现错误
+alert(10, 10);
+var sum = function(num1, num2) {
+	return num1 + num2;
+}
+原因是函数位于初始化语句中而不是一个函数声明
+
+### 作为值的函数
+ECMAScript中函数名本身就是变量，所以函数也可以作为值来使用。
+注意，当函数名作为参数的时候，不要加圆括号！
+比如function(sum(),sum())  是错的。 
+```
+function createComparisonFunction(propertyName) {
+	return function(object1, object2) {
+	var value1 = object1[propertyName];
+	var value2 = object2[propertyName];
+
+	if (value1 < value2) {
+		return -1;
+	} else if (value1 > value2){
+		return 1;
+	} else {
+		return 0;
+	}
+	};
+}
+
+var data = [{name: "Zaynex" ,age: 26},{name: "Nicholas", age:30}];
+data.sort(createComparisonFunction("name"));
+alert(data[0].name);
+data.sort(createComparisonFunction("age"));
+alert(data[0].age);
+
+		//按照对象的name属性值进行排序，按照对象的age属性进行排序
+
+
+
+
+函数内部属性
+
+arguments的主要用途是保存函数参数，但这个对象还有一个叫callee的属性，该属性是一个指针，指向拥有这个arguments对象的函数。
+
+
+	function factorial (num) {
+		if (num <=1) {
+			return -1;
+		} else {
+			return num * factorial(num-1);
+		}
+	}
+
+
+	function factorial (num) {
+		if (num <=1) {
+			return -1;
+		} else {
+			return num * arguments.callee(num-1);
+		}
+	}
+
+		解除函数执行与函数名紧密耦合的状态，这样即使函数名改变后，无论引用函数使用什么样的名字，函数依然可以得到正确的结果。
+		var trueFactorial = factorial;
+
+		factorial = function() {
+			return 0;
+		};
+		alert(trueFactorial(5));  //120 		使用arguments.callee后不会受到原函数名影响
+		alert(factorial(5));    //0 
+	
+
+this:函数执行的环境对象
+
+
+
+函数的方法和属性
+属性：length\prototype
+
+prototype保存了所有实例方法，不可枚举
+
+apply()
+call()
+
+
+	function  sum(num1, num2) {
+			return num1 + num2;
+		}
+		function callSum1(num1, num2) {
+			return sum.apply(this, arguments);
+		}
+		function callSum2(num1, num2) {
+			return sum.apply(this, [num1, num2]);
+		}
+		alert(callSum1(10, 10));
+		alert(callSum2(10, 10));
+		apply()和call()，在特定的作用域中调用函数，实际上等于设置函数体内this对象的值。 
+		apply()方法接受两个参数：一个是在其中运行函数的作用域，另一个是参数数组。
+		第二个参数可以是Array的实例，也可以是arguments对象。
+		上述例子中，callSum1()在执行sum()函数时传入了this值（因为是在全局作用域中调用的，所以传入的是window对象）
+
+		在严格模式下， 未指定环境对象而调用函数，则this值不会会转化为window,
+		除非明确把函数添加到某个对象或者调用call()或apply()，否则this值将是undefined。
+
+		call(this, num1, num2)  使用方法是必须要将传递给函数的参数逐个列举。
+
+		call()和apply()他们最强大的地方是能够扩充作用域,最大好处，就是对象不需要与方法有任何耦合关系。
+
+		window.color = "red";
+		var o = {color: "blue" };
+
+		function sayColor(){
+			alert(this.color);
+		}
+
+		sayColor();    //red
+		sayColor.call(this) ;   //red
+		sayColor.call(window);  //red
+		sayColor.call(o);  //blue
+
+		ECMAScript还定义了一个方法：bind().这个方法会创建一个函数的实例，其this值会被绑定到传给bind()函数的值。
+		window.color = "red";
+		var o = {color: "blue" };
+
+		function sayColor(){
+			alert(this.color);
+		}
+		var objectSayColor = sayColor.bind(o);
+		objectSayColor()  //blue
+		sayColor调用bind()并传入对象o，创建objectSayColor()函数即使在全局作用域中调用这个函数，也会看到"blue".
+
+
+
+
+## 基本包装类型
+ECMAScript提供了特殊的引用类型： Boolean\Number\String
+```
+var  s = "some text";
+var s2 =s.substring(2);
+alert(s2); //e text
+```
+引用类型和基本包装类型的主要区别就是** 对象的生存周期。 **
+使用new操作符创建的引用类型的实例，在执行刘离开当前作用域之前都一直保存在内存中。
+而自动创建的基本包装类型的对象，则只存在于一行代码的执行瞬间，然后立即被销毁。
+```
+var s1= "Some text";
+s1.color = "red";
+alert(s1.color);  //undefined
+```
+第二行创建的string对象在执行第三行代码时已经被销毁了。
+** 第三行代码有创建了自己的String对象，而该对象没有color属性。 **
+```
+var str = new String("some text");
+var str2 = str.substing(2);
+str = null;
+```
+1. 创建基本包装类型的一个实例  
+2. 在实例上调用指定的方法	
+3. 销毁这个实例    
+对于基本包装类型的实例调用typeof会返回"Object" ,而所有基本包装类型的对象都会被转为布尔值 true.
+
+### 三种基本包装类型
+Boolean ,Number , String
+基本包装类型和使用new操作符调用基本包装类型的构造函数是不同的。
+```
+var value = "25";
+var number = Number(value); // 转型函数，Number类型
+alert(typeof number);  // "number"
+var obj = new Number(value); // 构造函数
+alert(typeof obj); // "object" 
+
+
+### Boolean类型
+布尔表达式中所有对象都会被转化成true;
+
+
+### Number类型
+var num = 10.005;
+alert(num.toFixed(2));  //10.01
+四舍五入，但IE9之前是不行的
+
+
+
+### String字符串
+#### 字符方法
+	charAt() 以单字符串形式返回给定位置的那个字符；
+```
+var stringValue = "hello world";
+alert(stringValue.charAt(1)); // "e"
+```
+	charCodeAt() 以字符编码返回给定位置的那个字符；
+```
+var stringValue = "hello world";
+alert(stringValue.charAt(1)); // "101"小写字母e的字符编码
+```
+#### 字符位置方法
+##### indexOf() 返回该字符在字符串中的位置，没找到返回-1
+##### lastIndexOf()  从末尾开始搜索；
+当存在两个参数后，indexOf("o",6);indexOf从第六个位置之后向后搜索，lastIndexOf("o",6)则在6前开始搜索
+```
+var stringValue = "shidhskfsdfjklsjfkl sdkl;fjkdsl;jfkdsl;jf";
+var positions = new Array();
+var pos = stringValue.indexOf("e");
+while(pos>-1){
+	positions.push(pos);
+	pos = stringValue.indexOf("e",pos+1); //每次从已经找到后的位置开始寻找
+}
+alert(positions);
+```
+### 字符串方法
+	contact() 字符串拼接，但实际上还是用 + 比较多。
+slice()和substring()都可以接受两个参数：
+1. 表示起始位置
+2. 表示字符串最后一个字符后面的位置
+substr()接受两个参数：
+1. 起始起始位置
+2. 表示获取字符串长度
+如果上述方法都没有第二个参数，那就默认字符串长度为第二个参数
+```	
+var stringValue = "hello world";
+console.log(stringValue.slice(3)); //lo world
+console.log(stringValue.substring(3));//lo world
+console.log(stringValue.substr(3));//lo world
+console.log(stringValue.slice(3,7)); //lo w 第二个参数表示结束范围
+console.log(stringValue.substring(3,7));//lo w
+console.log(stringValue.substr(3,7));//lo worl 第二个参数表示返回的个数
+```
+如果参数中有负数，substring()会将所有负数转化为0；substr()会将第二个负数转换为0；slice()会加上字符串长度
+```
+var  demo = 'hello world';
+alert(demo.substr(3,-4)); // ''
+alert(demo.substring(3,-4)); //hel 注意下 ，
+```
+这个方法会将较小的数作为起始位置，较大的数作为结束位置；
+
+IE中JS处理 substr()方法传递负值时存在问题，它会返回原始字符串，IE9修复了这个问题
+
+### trim()方法
+创建一个字符串的副本删除前置和后缀的所有空格
+
+### 字符串大小写转换
+toLocalUpperCase() 大写  特定方法
+toUpperCase()  大写  常用方法
+toLocalLowerCase() 小写
+toLowerCase() 小写
+
+### 字符串的模式匹配方法
+#### match()
+只接受一个参数：正则表达式或RegExp对象。
+对应返回的是与正则表达式中所捕获组相匹配的字符串或者是得到相同的数组。
+#### replace()
+接受两个参数：
+1. RegExp的对象或者是一个字符串
+2. 一个字符串或者是一个函数；如果是字符串，则会替换第一个子字符串，如果是函数，则在函数中返回相应的结果
+```
+var text = "cat,bat,sat,fat";
+var result = text.replace("at", "ond");
+console.log(result); //cond,bat,sat,fat
+
+result = text.replace(/at/g, "ond");
+console.log(result); //cond,bond,sond,fond
+```
+#### split()
+- 基于指定分隔符将一个字符串分割成多个字符串，并将结果保存在数组中。
+```
+var colorText = "red,blue,yellow,greed";
+var colors1 = colorText.split(",");
+var colors2 = colorText.split(",",2);
+var colors3 = colorText.split(/[^\,]+/);
+console.log(colors1); //["red", "blue", "yellow", "greed"]
+console.log(colors2);//["red", "blue"]
+console.log(colors3);//["", ",", ",", ",", ""]
+```
+如果需要截取长度，就在第二个参数中传入一个数值。
+至于colors3的值出现了两个空字符串，是因为通过正则表达式指定的分隔符出现在了字符串的开头。
+
+## 单体内置对象
+由ECMAScript实现提供的，不依赖于宿主环境的对象，这些对象在ECMAScript程序执行之前就存在了。
+有Object、Array、String、Global、Math.
+
+### Global对象
+事实上，没有全局变量或全局函数，所有全局作用域中定义的属性和函数都是Global对象的属性。
+#### URL编码方法
+Uniform Resource Identifiers,通用资源标识符
+```
+var uri= "http://ife.baidu.com/task/detail?taskId=19";
+console.log(encodeURI(uri)); //http://ife.baidu.com/task/detail?taskId=19
+console.log(encodeURIComponent(uri));//http%3A%2F%2Fife.baidu.com%2Ftask%2Fdetail%3FtaskId%3D19 
+```
+使用encodeURIComponent()会使用对应的编码替换所有非字母数字字符。一般我们用这个比较多，而且在实践中更常见的是对查询字符串参数而不是对基础URI进行编码
+```
+var uri = "http%3A%2F%2Fife.baidu.com%2Ftask%2Fdetail%3FtaskId%3D19";
+console.log(decodeURI(uri));
+//http%3A%2F%2Fife.baidu.com%2Ftask%2Fdetail%3FtaskId%3D19
+console.log(decodeURIComponent(uri));//
+http://ife.baidu.com/task/detail?taskId=19
+```
+
+#### eval()
+eval() 就像ECMAScript解析器。它只接受一个参数，即要执行的ECMAScript字符串,把要传入的参数当作语句去解析。
+严格模式下，在外部访问不到eval()。
+```
+eval("alert('hi!')");
+就等于
+alert("hi!");
+
+因为强大，所以要小心使用，会被代码注入。
+
+在所有代码执行前，作用域中就已经存在两个内置对象：Global 和 Math。  在大多数ECMAScript实现中都不能直接访问Global对象，不过web浏览器实现了承担该角色的window对象。全局变量和函数都是Global对象的属性。
+### Math 方法
+```
+alert(Math.ceil(27.9));  //28
+alert(Math.ceil(27.1));  //28
+
+alert(Math.floor(27.1)); //27
+alert(Math.floor(27.9)); //27
+
+alert(Math.round(27.1)); //27
+alert(Math.round(27.9)); //28
+```
+#### random()
+Math.random() 生成随机数x (0 <= x <1)
+生成1到10的整数
+```
+var num = Math.floor(Math.random() * 10 + 1); //floor向下取整 
+```
+```
+//生成某区间的随机数
+function selectForm(lowerValue, upperValue){
+  var choices = upperValue - lowerValue;
+  return Math.floor(Math.random()*choices + lowerValue);
+}
+var num = selectForm(2,10);
+```

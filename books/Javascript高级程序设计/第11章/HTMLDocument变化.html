@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<!-- 1.兼容模式 -->
+	<script>
+		if(document.compatMode == "CSS1Compat"){
+			alert("Standards mode");
+		}else {
+			alert("Quirks mode");
+		}//检测IE是在标准模式下还是在混杂模式下，因为不同模式渲染页面不同
+	</script>
+
+</body>
+</html>

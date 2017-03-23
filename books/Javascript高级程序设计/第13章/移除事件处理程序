@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<div id="myDiv">
+		<input type="button" id="myBtn" value="click me ">
+	</div>
+		<script>
+		var btn = document.getElementById('myBtn');
+		btn.onclick = function  (argument) {
+
+			btn.onclick =null;
+			document.getElementById('myDiv').innerHTML = "Processing";
+		}
+			//传统的做法是为了避免双击，将单个按钮移除并替换成了一条消息，但问题在于当按钮从页面中移除时，依然带有事件处理程序。在<div>设置 innerHTML 可以把按钮移走，但事件处理程序仍然与按钮保持引用关系。因此建议手工删除
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{padding:0;margin: 0}
+	</style>
+</head>
+<body>
+	<table border="1" width="100%">
+		<tbody>
+			<tr>
+				<td>Cell 1,1</td>
+				<td>Cell 2,1</td>
+			</tr>
+			<tr>
+				<td>Cell 1,2</td>
+				<td>Cell 2,2</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+<script>
+	var table = document.createElement("table");
+	table.border = 1;
+	table.width = 100%;
+
+	var tbody = document.createElement("tbody");
+	table.appendChild(tbody);
+
+	var row1 = document.createElement("tr");
+	tbody.appendChild(row1);
+
+	var cell1_1 = document.createElement("td");
+	cell1_1.appendChild(document.createTextNode("cell 1,1"));
+	row1.appendChild(cell1_1);
+	var cell2_1 = document.createElement("td");
+	cell2_1.appendChild(document.createTextNode("cell 2,1"))
+	row1.appendChild(cell2_1);
+    //利用dom操作比较繁琐
+
+    tbody.insertRow(0);
+    tbody.rows[0].insertCell(0);
+    tbody.rows[0].cells(0).appendChild(document.createTextNode("cell 1,1"));
+    tbody.rows[0].insertCell(1);
+    tbody.rows[0].cells(1).appendChild(document.createTextNode("cell 2,1"))
+
+    //与上面相同，都是创建第一行，只是后者利用table的属性和方法去创建
+
+	document.body.appendChild(table);
+
+
+</script>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+		var pageWidth = window.innerWidth;
+		var pageHeight = window.innerHeight;
+
+		if (typeof pageWidth != "number"){
+			if (document.compatMode == "CSS1Copat"){
+				pageWidth = document.documentElement.clientWidth;
+				pageHeight = document.documentElement.clientHeight;
+			}else{
+				pageWidth = document.body.clientWidth;
+				pageHeight = document.body.clientHeight;
+			}
+		}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

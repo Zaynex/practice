@@ -1,0 +1,20 @@
+var start = Date.now();
+<!-- 取得开始时间 -->
+
+doSomething();调用函数
+
+var stop = Date.now();
+result = stop  - start;
+
+
+取得停止时间；
+
+
+继承的方法
+
+
+日期格式化方法
+Date.toDateString(); 以特定实现的格式显示星期几、月、日和年；
+Date.toTimeString(); 时、分、秒、时区
+Date.toLocaleDateString(); 以特定于地区的格式显示 星期几.....
+Date.toLocaleTimeString(); 以特定于地区的格式显示 时......

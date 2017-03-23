@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<script>
+		function factory(){
+			var name = "laruence";
+			var intro = function(){
+				alert('I am ' + name);
+			}
+			return intro;
+		}
+
+		function app(para) {
+			var name = para;
+			var func = factory();
+			func();
+		}
+
+		app('eve');
+	</script>	
+</body>
+</html>

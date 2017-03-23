@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="bd user disabled">11</div>
+</body>
+<script>
+		var div = document.getElementsByTagName("div")[0];
+		var classNames = div.className.split(/\s+/);
+
+		var pos = -1,
+			i,
+			len;
+		for(i=0, len=classNames.length; i<len; i++){
+			if(classNames[i] == "user"){
+				pos = i;
+				break;
+			}
+		}
+
+		classNames.splice(i,1); //删除类名
+
+		div.className = classNames.join(" ");
+		//添加类名拼成字符串重新设置
+		// var div = document.getElementsByTagName("div")[0];
+		// div.classList.remove("user");
+		//classList属性支持浏览器有火狐 chrome ，其他的都不行。
+		
+	div.classList.toggle("user");//如果有user的className就删除，如果没有就新建一个
+	div.classList.add("user");//新建className 为 user的值，如果值已存在，则不添加
+	if(div.classList.contains("bd")&&div.classList.contains("user")){
+	 // code
+	}
+	</script>
+</html>

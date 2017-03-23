@@ -1,0 +1,29 @@
+垃圾收集器
+1.标记清除
+	垃圾收集器在运行时会给存储在内存中所有变量都加上标记。然后，去掉环境中的变量以及被环境中的变量引用的变量的标记。
+2.引用计数
+	在声明一个变量并且将一个引用类型赋值给变量时，这个值得引用次数就是1.同时又被另一个变量赋值，则该值得引用次数加1， 如果包含对这个值引用的变量又取得了另外一个值，则这个值的引用次数减1。当该值引用次数为0时，将其占用的内存收回。但在循环引用时，会出现问题。
+
+	function problem(){
+		var objectA = new Object();
+		var objectB = new Object();
+
+		objectA.someOtherObject = objectB;
+		objectB.anotherObject = objectA;
+}
+相互调用，始终有赋值。
+
+
+
+
+管理内存：
+
+一旦数据不再有用，最好通过将其值设置为null来释放其引用——解除引用。
+function createPerson(name){
+	var localPerson = new Object();
+	localPerson.name = name;
+	return localPerson;
+}
+var globalPerson = createPerson("Zaynex");
+
+globalPerson = null;   // 手工解除引用

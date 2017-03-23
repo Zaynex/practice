@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div.menu-bar{
+			position: relative;
+			margin:0;
+			padding: 0;
+			height: 30px;
+			width: 90%;
+		}
+
+		div.menu-bar ul{
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			list-style-type: none;
+			background-color: #fffabf;
+			overflow: visible;
+		}
+
+		div.menu-bar ul li{
+			display: block;
+			float: left;
+			height: auto;
+			width: 120px;
+		}
+
+		div.menu-bar li > span, div.menu-bar li > a, div.menu-bar li > a:link, div.menu-bar li > a:visited, div.menu-bar li > a:active {
+			display: block;
+			padding: 0 0 0 10px;
+			height: 100%;
+			width: 109px;
+			border-right:  1px #5d5636 solid ;
+			line-height: 30px;
+			font-family: times,serif;
+			font-size: 17px;
+			font-style: italic;
+			text-decoration: none;
+			background-color: #fffabf;
+			color: #5d5636;
+			cursor: pointer;
+		}
+		div.menu-bar li:hover > span, div.menu-bar li:hover > a {
+	color: #220000;
+	background-color: #eeeabe;
+}
+
+div.menu-bar ul ul{
+	margin-top: 2px;
+	display: none;
+	position: static;
+	height: auto;
+
+	width: 160px;
+	border: 1px #666666 solid;
+	background-color: #dddddd;
+}
+
+div.menu-bar li:hover>ul {
+	display: block;
+}  
+/*上面这个是重点代码*/
+div.menu-bar ul ul li{
+	position: relative;
+	float: none;
+	display: block;
+	height: 28px;
+	width: 100%;
+	border:none;
+}
+
+div.menu-bar ul ul li > span, div.menu-bar ul ul li > a,
+div.menu-bar ul ul li > a:link, div.menu-bar ul ul li > a:visited,
+div.menu-bar ul ul li > a:active {
+	height: 100%;
+	width: 96%;
+	position:  0 0 0 4%;
+	line-height: 28px;
+	background-color: transparent;
+	border:none;
+	color: #000000;
+	font-family: georgia;
+	font-size: 11px;
+	font-style: normal;
+}
+div.menu-bar ul ul li:hover > span, div.menu-bar ul ul li:hover > a {
+	background-color: #cccccc;
+	color: #ff0000;
+}
+
+div.menu-bar ul ul ul{
+	position: absolute;
+	top: 4px;
+	left: 155px;
+	margin: 0;
+}
+/* sub-sub-menu position is relative to its parent */
+
+span.menu-nav:after, a.menu-nav:after{
+	content: "\00BB";
+	float: right;
+	margin-right: 8px;
+}
+/*小箭头*/
+	</style>
+</head>
+<body>
+	<div class="menu-bar">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li>
+				<a href="#">Javascript</a>
+				<ul>
+					<li>
+						<a href="#">Link</a>
+					</li>
+					<li>
+						<a href="#" class="menu-nav">Submenu</a>
+						<ul>
+							<li>
+								<a href="#" class="menu-nav">Submenu</a>
+								<ul>
+									<li><span onclick="alert(!);">Javascript function</span></li>
+									<li>
+										<a href="#" class="menu-nav">Submenu</a>
+										<ul>
+											<li><span onclick="alert(!);">Javacript function</span></li>
+											<li>
+												<a href="#" class="menu-nav">Submenu</a>
+												<ul>
+													<li><span onclick="alert(!)">Javascript function</span></li>
+													<li>
+														<a href="#" class="menu-nav">Submenu</a>
+														<ul>
+															<li><span onclick="alert(!)">Javascript function</span></li>
+															 <li><a href="example.html">Link</a></li>
+								                            <li><span onclick="alert('!');">JavaScript function</span></li>
+								                            <li><a href="example.html">Link</a></li>
+								                            <li><a href="example.html">Link</a></li>
+														</ul>
+													</li>
+													<li><a href="example.html">Link</a></li>
+							                        <li><a href="example.html">Link</a></li>
+							                        <li><a href="example.html">Link</a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									 <li><span onclick="alert('!');">JavaScript function</span></li>
+					                <li><a href="example.html">Link</a></li>
+					                <li><a href="example.html">Link</a></li>
+					                <li><a href="example.html">Link</a></li>
+					                <li><a href="example.html">Link</a></li>
+								</ul>
+							</li>
+							 <li><a href="example.html">Link</a></li>
+           					 <li><span onclick="alert('!');">JavaScript function</span></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id='mybutton'>11</button>
+	<script>
+		var button = document.getElementById('mybutton');
+		button.focus();
+		alert(document.activeElement === button); //true
+		alert(document.hasFocus());
+		//通过检测文档是否获得了焦点，可以知道用户是否正在与页面交互
+	</script>
+</body>
+</html>

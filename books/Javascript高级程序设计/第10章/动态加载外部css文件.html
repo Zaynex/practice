@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+</head>
+<body>
+<script>
+function loadStyleString(css){
+	var style = document.createElement("style");
+	style.type = "text/css";
+	try{
+		style.appendChild(document.createTextNode(css));
+	}catch (ex){
+		style.stylesheet.cssText = css;
+		//在IE中：注意csstext属性，在重用一个style元素并在此设置这个属性时，会导致浏览器奔溃。 将.cssText属性设置为空字符串也会导致奔溃 
+	}
+	var head = document.getElementsByTagName("head")[0];
+	head.appendChild(style);
+}
+
+loadStyleString("body{backgroud-color:red}"); //实时向页面添加样式
+</script>
+</body>
+
+</html>

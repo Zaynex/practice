@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<ol>ECMAScript函数不介意传递多少个参数，也不在乎传进来的参数是什么数据类型，原因是其参数的内部是用一个数组表示的。函数接受到的永远都是这个数组，而不用关心数组中包含哪些参数</ol>
+	<ol>在函数体内可以通过arguments对象来访问这个数组，从而获得传递给函数的每一个参数，arguments对象和数组类似，但不是Array的实例</ol>
+	<ol>ECMAScript函数有一个重要特点：命名的函数只提供方便，但不是必需的</ol>
+	<ol></ol>
+	
+	<script>
+		function doAdd(){
+			if(arguments.length == 1) {
+				alert(arguments[0] + 10);
+			}else if (arguments.length == 2){
+				alert(arguments[0] + arguments[1]);	
+			}
+		}
+
+		doAdd(10);  // 20;
+		doAdd(30 , 20) // 50;
+		如果参数只有1个，那么让第一个参数加上10;如果参数有两个，就让第一个参数和第二个参数相加;
+
+
+		funcion doAdd(num1, num2){
+			arguments[1] = 10;
+			alert(arguments[0] + num2);
+		}
+		每次执行doAdd函数都会重写第二个参数，将其值修改为10。对象中的值会自动反映到对应的命名参数，所以修改arguments[1]等于修改了num2.但两者并不是说访问相同的内存空间，它们的内存空间是独立的，只是值会同步。
+			最后一点：没有传递值得命名参数将自动被赋予undefined值，这跟定义了变量但没初始化一样。
+			严格模式下对使用arguments对象有一些限制。首先，之前的例子这样赋值给num2无效，num2的值依旧为undefined，其次重写arguments的值会导致语法错误，代码不会执行。
+
+			ECMAScript中所有参数传递的都是值，不可能通过引用传递参数
+	</script>
+
+</body>
+</html>

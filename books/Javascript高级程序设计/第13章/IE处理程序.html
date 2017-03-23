@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<button id="button">click me</button>
+		<script>
+		var btn = document.getElementById('button');
+
+		btn.attachEvent("onclick", function(){
+			alert(this === window); //true
+		});
+
+		btn.attachEvent("onclick", function () {
+			alert("hi");
+		})
+		//在使用attchEvent()情况下，事件处理程序会在全局作用域中运行。
+
+		//另外，事件会反向执行，先输出 hi， 在输出 true；(IE9已修复)
+
+		//删除事件 
+		//btn.detachEvent("onclick", handle);
+	</script>
+</body>
+</html>

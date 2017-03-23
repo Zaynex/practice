@@ -1,0 +1,42 @@
+要想知道某个元素在页面上的偏移量，将整个offsetLeft 和 offsetTop 与
+offsetParent  的属性相加即可
+
+
+function getElementLeft () {
+	var actualLeft = element.offsetLeft;
+	var current = element.offsetParent;
+
+	while (current != Null) {
+		actualLeft += current.offsetLeft;
+		current = current.offsetParent;
+	}
+
+	return actualLeft;
+}
+
+
+function getElementTop () {
+	var actualTop = element.offsetTop;
+	var current = element.offsetParent;
+
+	while (current != Null) {
+		actualTop += current.offsetTop;
+		current = current.offsetParent;
+	}
+
+	return actualTop;
+}
+
+对于使用表格和内嵌框架布局的页面，由于不同浏览器实现这些元素方式不同，就不太精确了。
+一般来说，页面中所有元素都会被包含在几个 <div>元素章，而这些元素的 offsetParent 又是body元素，所以
+getElementTop() 与getElementLeft() 会返回  offsetTop 和offsetLeft  相同的值  
+
+
+scrollHeight 和 scrollWidth 等于文档内容区域大小
+
+clientWidth 和 clientHeight 等于视口大小 view
+
+scrollTop  文档到窗口顶部的距离，滚动距离
+
+获取文档总高度时，必须取得 srcollWidth/clientWidth中的最大值。
+

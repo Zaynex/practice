@@ -1,0 +1,43 @@
+DOM 0 级事件处理程序
+
+var  btn = document.getElementById('id');
+btn.onclick = function () {
+	alert("Clicked");
+};
+
+DOM 2 级事件处理程序
+
+var btn = document.getElementById("id");
+btn.addEventListener("click", function(){
+	alert(this.id);
+}, false);
+
+设置false 后，该事件在冒泡阶段会触发
+
+DOM2级主要优势是可以添加多个事件处理程序
+
+var btn = document.getElementById("id");
+btn.addEventListener("click", function(){
+	alert(this.id);
+}, false);
+btn.addEventListener("click", function(){
+	alert("helloworld");
+}, false);
+
+两个事件按照先后顺序触发
+
+
+由于removeEventListener() 中所有参数必须一致，由于匿名函数存在，导致以上方式不能删除事件处理程序
+
+因此，使用函数表达式可解决该问题
+
+	var btn = document.getElementById('id');
+	var handle = function() {
+		alert(this.id);
+	};
+
+	btn.addEventListener("click", handle, false);
+
+	btn.removeEventListener("click", handle, false);
+
+

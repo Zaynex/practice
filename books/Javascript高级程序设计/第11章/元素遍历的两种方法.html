@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var i,len,
+		child = element.firstChild;
+		while(child != element.lastChild){
+			if(child.nodeType == 1){  //检查是否为元素，避免文本节点干扰
+				processChild(child);   
+			}
+			child = child.nextSibling;
+		}
+
+		//使用 Element Traversal
+		var i,len,
+		child = element.firstElementChild;
+		while(child != element.lastElementChild){
+			processChild(child);
+			child = child.nextElementSibing;
+		}
+	</script>
+</body>
+</html>

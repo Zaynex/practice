@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		for(property in expression) statement ;
+		举例：
+
+		for(var propName in window){
+			document.write(propName);
+		}
+		将window对象存在的属性名赋值给 propName;
+		ECMAScript中对象的属性没有顺序，因此输出的属性名不可预测的。
+
+		如果要迭代的对象的变量值为 null 或 undefined ,for-in 为抛出错误，ECMAScript5后更正这一方法
+		建议在循环之前，先确认对象值不是null 或 undefined 。
+	</script>
+</body>
+</html>
