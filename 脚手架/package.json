@@ -29,6 +29,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "has-flag": "^2.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

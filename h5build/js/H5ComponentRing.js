@@ -1,1 +1,0 @@
-var H5ComponentRing=function(a,n){n.type="pie",n.length>1&&(n.data=[n.data][0]);var t=new H5ComponentPie(a,n),e=$('<div class="mask">');console.log(e),t.addClass("h5_component_ring"),t.append(e);var o=t.find(".text");return o.attr("style",""),n.data[0][2]&&o.css("color",n.data[0][2]),e.append(o),t};

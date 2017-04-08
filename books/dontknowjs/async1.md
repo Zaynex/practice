@@ -46,7 +46,7 @@ function asyncify(fn) {
             }, 0);
         fn = null;
     return function(){
-        // 触发调快，在定时器intc触发指示异步转换发生之前
+        // 触发太快，在定时器intc触发指示异步转换发生之前
         if(intv) {
             fn = orig_fn.bind.apply(orig_fn,
                 [this].concat([].slice.call(arguments))
@@ -63,6 +63,8 @@ function result(data){
     console.log(a);
 }
 var a = 0;
+// 这里是为了确保a++先执行，后异步执行result，
+// 虽然是个异步请求，但是如果有缓存了，就会立即调用
 ajax('url...', asyncify(result));
 a++;
 ```

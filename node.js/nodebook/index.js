@@ -70,6 +70,7 @@ function a(){
 var afterA = _after(3, a);
 afterA()
 afterA()
+
 afterA();// after a() 3times, i come 第三次完成后执行
 
 
