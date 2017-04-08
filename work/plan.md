@@ -129,3 +129,12 @@ router看得一头雾水，搬家了。真好。
 1. 需求是什么，做什么，不做什么。影响到哪里？
 2. 上线时间
 3. 上班的时候赶紧把活干完，没事了就好好学东西。
+
+2017/4/8
+现在需要明白的是，angular和 react不是一个阵营的。现在公司用的是angular2。需要结合业务你需要学习的是
+1. angular2
+2. rxjs
+3. redux + angular2
+4. server Render(Node)
+
+react 可以放到后面，毕竟react只是view库。重在理解Redux!
