@@ -107,4 +107,48 @@ Promise.all([p1, p2, p3])
 // 'eroorrrrr....'
 ```
 
+### Promise.race([...])
+多个操作，谁先返回就用谁的数据。
+需要注意的是，对于`Promise.all([...])`传入空数组时，它会立即完成，但是对Promise.race传入空数组，会挂住，永远不会决议。
 
+### 让ajax支持Promise
+```js
+function foo(x, y, cb){
+    ajax('http://some.url./1?x=' + x + '%y=' + y),
+    cb
+};
+
+foo(11, 33, function(err, text) {
+    if(err) {
+        console.error(err)
+    }else {
+        console.log(text)
+    }
+})
+
+if(!Promise.wrap) {
+    Promise.wrap = function(fn) {
+        return function() {
+            var args = [].slice.call(arguments);
+            return new Promise(function(resolve, reject) {
+                fn.apply(
+                    null,
+                    args.concat(function(err, v) {
+                        if(err) {
+                            reject(err);
+                        }else {
+                            resolve(v);
+                        }
+                        })
+                    );
+                });
+        }
+    }
+}
+
+var request = Promise.wrap(ajax);
+request('http://some.rul.1./').then()
+```
+
+#### promise改装ajax
+[使用promise手动封装ajax函数](http://www.cnblogs.com/kazetotori/p/6037940.html#undefined)
