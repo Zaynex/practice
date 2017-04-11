@@ -1,5 +1,6 @@
 ## new features in angular4 
 [English](https://github.com/angular/angular/blob/master/CHANGELOG.md)
+[the same blog](http://angularjs.blogspot.hk/2017/03/angular-400-now-available.html)
 
 ### 视图引擎
 [参考资料](https://docs.google.com/document/d/195L4WaDSoI_kkW094LlShH6gT3B7K1GZpSBnnLkQR-g/preview#heading=h.vhnzfm8md8md)
@@ -20,4 +21,4 @@
 
 ### ES2015
 
-## 如何优雅升级
+## 评估风险&如何优雅升级
