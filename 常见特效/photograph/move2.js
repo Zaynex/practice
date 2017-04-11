@@ -14,7 +14,7 @@ function getStyle(obj, attr)
 }
 
 function startMove(obj, json, fn)
-{
+{	
 	clearInterval(obj.timer);
 	obj.timer=setInterval(function (){
 		var bStop=true;		//这一次运动就结束了——所有的值都到达了
