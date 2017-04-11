@@ -15,8 +15,8 @@
 window.onload=function ()
 {
 	var oUl=document.getElementById('ul1');
-	var aLi=oUl.getElementsByTagName('li');
-	var aPos=[];
+	aLi=oUl.getElementsByTagName('li');
+	aPos=[];
 	var iMinZindex=2;
 	var i=0;
 	
@@ -37,12 +37,52 @@ window.onload=function ()
 		aLi[i].index=i;
 	}
 	
+
 	//拖拽
-	for(i=0;i<aLi.length;i++)
-	{
-		setDrag(aLi[i]);
-	}
+	// for(i=0;i<aLi.length;i++)
+	// {
+	// 	setDrag(aLi[i]);
+	// }
 	
+	var once,lastAim;
+	var notFinsh = true;
+
+	function startup(e){
+		if(notCenter(e)) {
+			// 点击的图片跑到中间
+			startMove(e.target.parentNode, aPos[4]);
+			if(!once){
+				startMove(findImg(), {left: e.target.parentNode.offsetLeft, top: e.target.parentNode.offsetTop});
+				once = true;
+			}else {
+				// 中间的图片跑到点击的位置
+				lastAim.style.transform = 'scale(1, 1)';
+				startMove(lastAim, {left: e.target.parentNode.offsetLeft, top: e.target.parentNode.offsetTop})
+			}
+			lastAim = e.target.parentNode;
+		}
+		bigImg(e.target.parentNode)
+	}
+
+
+	function notCenter(e){
+		if(e.target.parentNode.style.left !== '230px' || e.target.parentNode.style.top !== '180px') {
+			console.log("不在中间")
+			return true;
+		}
+		return false;
+	}
+	function findImg(){
+		return aLi[4];
+	}
+	var lastNode;
+	function bigImg(node){
+		node.style.transform = 'scale(1.5, 1.5)';
+		node.style.zIndex = iMinZindex++;
+	}
+	oUl.addEventListener('touchend',startup, false);
+	
+
 	function setDrag(obj)
 	{
 		obj.onmousedown=function (ev)
@@ -201,7 +241,6 @@ window.onload=function ()
 	<li><img src="images/2.jpg" /></li>
 	<li><img src="images/3.jpg" /></li>
 	<li><img src="images/4.jpg" /></li>
-	<li><img src="images/5.jpg" /></li>
 </ul>
 </body>
 </html>
