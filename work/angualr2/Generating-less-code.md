@@ -344,3 +344,143 @@ Angular2 在不同版本的代码生成
 - 有一种可以包括所有绑定的模板的更新方法，有一个声明对于每个元素/指令/query
 - 一个 handleEvent 方法用来包含所有在模板中的事件表达式
 
+引进视图引擎服务
+- 它是负责创建上述数据结构的视图
+- 拥有更新元素/指令/queries的方法
+
+假设我们已经有如下类型的帮助函数
+```
+function viewDef(
+  nodes: (ElementDef | TextDef | TemplateDef | 
+          DirectiveDef | ComponentDef)[];
+  update: (ve: ViewEngine, view: View, comp: any) => void,
+  handleEvent: (ve: ViewEngine, view: View, cmp: any, index: number, 
+                event: any) => boolean
+): View { // converts arguments into object ... }
+
+function elementDef(
+  parent: number,
+
+function viewDef(
+  nodes: (ElementDef | TextDef | TemplateDef | 
+          DirectiveDef | ComponentDef)[];
+  update: (ve: ViewEngine, view: View, comp: any) => void,
+  handleEvent: (ve: ViewEngine, view: View, cmp: any, index: number, 
+                event: any) => boolean
+): View { // converts arguments into object ... }
+
+function elementDef(
+  parent: number,
+  childCount: number,
+  name: string,
+): ElementDef { // converts arguments into object ... }
+
+function textDef(
+  parent: number
+): TextDef { // converts arguments into object ... }
+
+function templateDef(
+  parent: number,
+  childCount: number,
+  viewDef: ViewDefinition
+): TemplateDef { // converts arguments into object ... }
+
+function directiveDef(
+  elIndex: number,
+  ctor: any,
+  deps: DepDef
+):DirectiveDef { // converts arguments into object ... }
+
+function depDef(
+  token: any,
+  index: number
+): DepDef { // converts arguments into object ... }
+
+function componentDef(
+  elIndex: number,
+  ctor: any,
+  deps: (number | any)[],
+  // Note: Need the closure to be able to
+  // resolve cycles
+  viewDef: () => ViewDefinition
+): ComponentDef { // converts arguments into object ... }
+
+
+interface ViewEngine {
+  createEmbeddedView(
+    viewDef: ViewDefinition,
+    parent: View, parentIndex: number): View;
+
+  updateElement(view: View, index: number,
+    styles: {[key:string]: any}): void;
+  updateText(view: View, index: number, value: string): void;
+  updateDirective(view: View, index: number,
+    props: {[key: string]: any}): void;
+  updateViewContainer(view: View, index: number): void;
+  updateComponent(view: View, index: number,
+    props: {[key: string]: any}): void;
+}
+```
+
+我们可以生成下面的代码用来表示上面例子中的树。
+
+```
+const TreeComponent_1_ViewDef = viewDef(
+  [
+    elementDef(null, 1, 'tree'),
+    componentDef(0, TreeComponent, [], () => View_TreeComponent_0)
+  ],
+  (ve: ViewEngine, view: View, comp: TreeComponent) => {
+    ve.updateComponent(view, 1, {data: comp.data.left}
+      /* as {data: TreeComponent['data']}*/);
+  }
+);
+
+
+const TreeComponent_1_ViewDef = viewDef(
+  [
+    elementDef(0, null, 1, 'tree'),
+    componentDef(0, TreeComponent, [], () => View_TreeComponent_0)
+  ],
+  (ve: ViewEngine, view: View, comp: TreeComponent) => {
+    ve.updateComponent(view, 1, {data: comp.data.right}
+      /* as {data: TreeComponent['data']}*/);
+  }
+);
+
+const TreeComponent_0_ViewDef = viewDef(
+  [
+    elementDef(null, 1, 'span'),
+    textDef(0),
+    templateDef(null, 1, View_TreeComponent_1),
+    directiveDef(2, NgIf, [
+      depDef(ViewContainerRef, 2),
+      depDef(TemplateRef, 2)
+    ]),
+    templateDef(null, 1, View_TreeComponent_2),
+    directiveDef(2, NgIf, [
+      depDef(ViewContainerRef, 4),
+      depDef(TemplateRef, 4)
+    ]),
+  ],
+  (ve: ViewEngine, view: View, comp: TreeComponent) => {
+    ve.updateElement(view, 0, {'background-color': comp.bgColor});
+    ve.updateText(view, 1, interpolate(1,' ', comp.data.value,' '));
+    ve.updateDirective(view, 3, {ngIf: comp.data.left}
+      /* as {ngIf: NgIf['ngIf']}*/);
+    ve.updateDirective(view, 5, {ngIf: comp.data.right}
+      /* as {ngIf: NgIf['ngIf']}*/);
+
+    ve.updateViewContainer(view, 2);
+    ve.updateViewContainer(view, 4);
+  }
+);
+```
+
+### 新的 ideas
+当进入时保持`ViewDefinition`为一个[展开的数组](https://lodash.com/docs/#flatMapDeep)并且添加`parent`,
+
+- 可以让我们只在一个简单的循环里增加视图，只需要使用一个数组就一个产生结果（ element / directive / query）。也就是说我们不再需要使用递归或者其他复杂的数据结构了。
+
+- 在计算children的总属性时还需要加上`childCount` 和 `flags`。（比如他们是否有设置`ngOnDestroy`）
+
