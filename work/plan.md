@@ -138,3 +138,7 @@ router看得一头雾水，搬家了。真好。
 4. server Render(Node)
 
 react 可以放到后面，毕竟react只是view库。重在理解Redux!
+
+2017/4/14
+angualr4 升级
+reudx+angular4新体验
