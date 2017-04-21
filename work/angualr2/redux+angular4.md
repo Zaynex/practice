@@ -18,8 +18,8 @@ export interface Reducer<T> {
 ```
 
 #### Reducer的使用
-<img src="" width="800" height="500">
-<img src="" width="800" height="500">
+<img src="https://github.com/Zaynex/practice/blob/master/work/angualr2/reduce.png" width="800" height="500">
+<img src="https://github.com/Zaynex/practice/blob/master/work/angualr2/reducer2.png" width="800" height="500">
 
 ### Action
 Store中存储了我们的应用状态，Reducer接收之前的状态并输出新状态，但是我们如何让Reducer和Store之间通信呢？这就是Action的职责所在。在Redux规范中，所有的会引发状态更新的交互行为都必须通过一个显性定义的Action来进行。
@@ -65,3 +65,10 @@ StoreModule.provideStore({
 4. 动画模块提炼
 5. 新的语法 *ngIf等
 6. 服务端渲染
+
+## reference
+http://jhlstudy.blogspot.jp/2017/03/angular4-redux-todomvc.html
+http://www.jianshu.com/p/0deec21d728f#
+https://github.com/kenberkeley/redux-simple-tutorial/blob/master/redux-advanced-tutorial.md
+http://angularjs.blogspot.hk/2017/03/angular-400-now-available.html
+
