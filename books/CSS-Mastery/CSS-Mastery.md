@@ -14,4 +14,18 @@
 4. 当一个空元素存在3情况后，会发生一次叠加，如果前面也存在空元素，那个两个外边距会发生重叠，取最大的那个值。
 
 
+### 脱离文档流
+绝对定位会脱离文档流，并且不影响普通流中的位置。
+浮动虽然也会脱离文档流，但是如果被普通流中的文本包围，则框中的文本会收到浮动元素的影响，类似word排版一样，出现环绕的效果。
+
+## 背景图像效果
+左侧logo加右侧文字的方式：类似有道云笔记的logo
+```
+h1 {
+    padding-left:30px;
+    background-image: url(./img/icon.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+```
 
