@@ -1,7 +1,6 @@
 ## 介绍redux
 Redux是为了解决应用状态（State）管理而提出的一种解决方案。那么什么是状态呢？简单来说对于应用开发来讲，UI上显示的数据、控件状态、登陆状态等等全部可以看作状态。
 
-
 ## Redux核心理念
 <img src="http://note.youdao.com/yws/api/personal/file/C6857B9A982B483EB0E75EA4ACDF37E0?method=download&shareKey=222e4fd7cd5ccdf5f313ca5d7086a83c" alt="">
 
@@ -43,20 +42,8 @@ npm install @ngrx/core @ngrx/store --save
 
 **These core principles enable building components that can use the OnPush change detection strategy giving you intelligent, performant change detection throughout your application.**
 
-### let's go
-In your app's main module, import those reducers and use the `StoreModule.provideStore(reducers)` function to provide them to Angular's injector:
-```
-StoreModule.provideStore({
-      todos: ToDosReducer,
-      status: StatusReducer
-    }),
-```
-
-**注意：在redux里通过createStore(reducer, state) 获得store的。**
-
-
 ## redux探索
-
+https://github.com/kenberkeley/redux-simple-tutorial/blob/master/redux-advanced-tutorial.md
 
 ## angular4
 1. 模板引擎升级，代码量减少，更快
@@ -69,6 +56,5 @@ StoreModule.provideStore({
 ## reference
 http://jhlstudy.blogspot.jp/2017/03/angular4-redux-todomvc.html
 http://www.jianshu.com/p/0deec21d728f#
-https://github.com/kenberkeley/redux-simple-tutorial/blob/master/redux-advanced-tutorial.md
 http://angularjs.blogspot.hk/2017/03/angular-400-now-available.html
 
