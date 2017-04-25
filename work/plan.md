@@ -142,3 +142,8 @@ react 可以放到后面，毕竟react只是view库。重在理解Redux!
 2017/4/14
 angualr4 升级
 reudx+angular4新体验
+
+
+2017/4/25
+angular再学习
+node.js预热
