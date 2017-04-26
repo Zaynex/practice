@@ -150,5 +150,12 @@ var request = Promise.wrap(ajax);
 request('http://some.rul.1./').then()
 ```
 
+#### 基于$.ajax的promise
+见demo
+
 #### promise改装ajax
 [使用promise手动封装ajax函数](http://www.cnblogs.com/kazetotori/p/6037940.html#undefined)
+
+#### 实现promise
+https://zhuanlan.zhihu.com/p/25178630
+https://github.com/xieranmaya/blog/issues
