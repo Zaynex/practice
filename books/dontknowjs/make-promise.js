@@ -114,3 +114,94 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
 Promise.prototype.catch = function(onRejected) {
 	return this.then(null, onRejected);
 }
+
+function unwrap(promise, func, value) {
+	immediate(function() {
+		var returnValue;
+		try {
+			returnValue = func(value);
+		}
+		// 返回值不能是promise本身
+		if(returnValue === promise) {
+			doReject(promise, new TypeError('cannot resolve promise with itself'))
+		} else {
+			doResolve(promise, returnValue)
+		}
+	})
+}
+
+function QueueItem(promise, onFulfilled, onRejected) {
+	this.promise = promise;
+	this.callFulfilled = function(value) {
+		doResolve(this.promise, value)
+	};
+	this.callRejected = function(error) {
+		doReject(this.promise, error);
+	};
+	if(isFunction(onFulfilled)) {
+		this.callFulfilled = function(value) {
+			unwrap(this.promise, onFulfilled, value);
+		}
+	}
+	if(isFunction(onRejected)) {
+		this.callRejected = function(error){
+			unwrap(this.promise, onRejected, error);
+		}
+	}
+}
+
+Promise.resolve = resolve;
+function resolve(value) {
+	if(value instanceof this) {
+		return value;
+	}
+	return doResolve(new this(INTERNAL), value);
+}
+
+Promise.reject = reject;
+
+function reject(reason) {
+	var promise = new this(INTERNAL);
+	return doReject(promise, reason);
+}
+
+Promise.all = all;
+function all(iterable) {
+	var self = this;
+	if(!isArray(iterable)) {
+		return this.reject(new TypeError("must be an array"))
+	}
+
+	var len = iterable.length;
+	var called = false;
+	if(!len) {
+		return this.resolve([])
+	}
+
+	var values = new Array(len);
+	var resolved = 0;
+	var i = -1;
+	var promise = new this(INTERNAL);
+
+	while(++i < len) {
+		allResolver(iterable[i], i);
+	}
+	return promise;
+
+	function allResolver(value, i) {
+		self.resolve(value).then(resolveFromAll, function(err){
+			if(!called) {
+				called = true;
+				doReject(promise, err);
+			}
+		});
+
+		function resolverFromAll(outValue) {
+			values[i] = outValue;
+			if(++resolved === len && !called) {
+				called = true;
+				doResolve(promise, values);
+			}
+		}
+	}
+}
