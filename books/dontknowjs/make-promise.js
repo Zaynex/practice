@@ -205,3 +205,33 @@ function all(iterable) {
 		}
 	}
 }
+
+Promise.race = race;
+function race(iterable) {
+	var self = this;
+	if(!isArray(iterable)) {
+		return this.reject(new TypeError('must be an array'))
+	}
+
+	var len = iterable.length;
+	var promise = new this(INTERNAL);
+
+	while(++i < len) {
+		resolver(iterable[i])
+	}
+	return promise;
+
+	function resolver(value) {
+		self.resolve(value).then(function(response){
+			if(!called) {
+				called = true;
+				doResolve(promise, response)
+			}
+		}, function(error) {
+			if(!called) {
+				called = true;
+				doReject(promise, error);
+			}
+		});
+	}
+}
