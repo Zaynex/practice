@@ -19,5 +19,5 @@ var http = require('http');
 http.createServer((req, res) => {
 	res.writeHead(200, {'Content-Type':'image/jpg'});
 	fs.createReadStream('./image.jpg').pipe(res);
-}).listen(3000);
+}).listen(4000);
 console.log('server runing at port 3000');
