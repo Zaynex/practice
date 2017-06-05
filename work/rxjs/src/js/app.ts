@@ -3,6 +3,10 @@ import  'jquery'
 import 'bootstrap'
 require('bootstrap.min.css')
 import { createTodoItem, mockHttpRequest, mockToggle, search, HttpResponse } from './lib'
+import { FileUploader } from './FileUploader'
+const SparkMD5 = require('spark-md5')
+const uploader = new FileUploader()
+
 const $input = <HTMLInputElement>document.querySelector('.todo-val')
 const $list = <HTMLUListElement>document.querySelector('.list-group')
 const $add = document.querySelector(".button-add")
@@ -93,7 +97,7 @@ const search$ = type$.debounceTime(200)
     })
 
 
-const app$ = toggle$.merge(remove$, search$)
+const app$ = toggle$.merge(remove$, search$, uploader.uploadStream$)
     .do(r => console.log(r))
 
 app$.subscribe()
