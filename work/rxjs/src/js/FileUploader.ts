@@ -14,7 +14,7 @@ export class FileUploader {
     private file$ = Observable.fromEvent($attachment, 'change')
     .map((r: Event) => (r.target as HTMLInputElement).files[0])
     .filter(f => !!f)
-
+    constructor(private concurrency = 3) {}
     uploadStream$ = this.file$
                         .switchMap(this.readFileInfo)
                         .switchMap(i => Observable.ajax.post(`${apiHost}/upload/chunk`, i.fileinfo)
@@ -23,6 +23,14 @@ export class FileUploader {
                                 return {blobs, chunkMeta: r.response}
                             })
                         )
+                        .switchMap(({blobs, chunkMeta}) => {
+                            const dists = blobs.map((blob, index) => this.uploadChunk(chunkMeta, index, blob))
+                            const uploadStream = Observable.from(dists)
+                                .mergeAll(this.concurrency)
+
+                                return Observable.forkJoin(uploadStream)
+                                    .mapTo(chunkMeta)
+                        })
 
     private readFileInfo(file: File): Observable<{file: File, fileinfo: FileInfo}> {
         const reader = new FileReader()
@@ -47,6 +55,17 @@ export class FileUploader {
                     reader.abort()
                 }
             }
+        })
+    }
+
+    private uploadChunk(meta: ChunkMeta, index: number, blob: Blob) {
+        const host = `${apiHost}/upload/chunk/${meta.fileKey}?chunk=${index + 1}&chunks={meta.chunks}`
+        return Observable.ajax({
+            url: host,
+            body: blob,
+            method: 'post',
+            crossDomain: true,
+            headers: {'Content-Type': 'application/octet-stream'}
         })
     }
 
