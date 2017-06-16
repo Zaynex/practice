@@ -1,0 +1,17 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.box1, .box2, .box3 {
+    height: 100px;
+}
+.box1{
+    width: 100px;
+    background: red;
+}
+.box2 {
+    background: orange
+}
+.box3 {
+    background: greenyellow;
+}

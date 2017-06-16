@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.left, .main, .right {
+    height: 100px;
+}
+.left, .right {
+    width: 100px;
+}
+.left {
+    background: rebeccapurple;
+}
+.right {
+    background: darksalmon;
+}
+.main {
+    width: 100%;
+    background: peru;
+}
+.box {
+    background: lawngreen;
+    height: 100px;
+    clear: both;
+}
