@@ -10,7 +10,7 @@
 	}
 		.dashed-box { 
   position: relative;
-  z-index: 1;
+  z-index: 0;
   border: dashed;
   height: 8em;
   margin-bottom: 1em;
@@ -39,8 +39,9 @@
 		z-index: 10;
 		background: blue;
 		width: 100px;
-		height: 100px;
+		height: 200px;
 		left: 100px;
+		top: -20px;
 	}
 	.blue-box .blue-z-box{
 		position: absolute;
@@ -54,9 +55,17 @@
 	<div class="dashed-box">Dashed box
   <span class="gold-box">Gold box</span>
   <span class="green-box">Green box</span>
+  <div>sdsdsdsdsdsdsd</div>
   	<div class="blue-box">
   		<span class="blue-z-box">blue-zbox</span>
   	</div>
+	  <script>
+	  	var arr = [1,2,3];
+		  arr.__proto__ = {
+			  addClass: () => {console.log('ad class')},
+			  concat: Array.prototype.concat
+		  }
+	  </script>
 </div>
 </body>
 </html>
