@@ -77,8 +77,8 @@ Expires用时刻来标识失效时间，因为会受到时间同步的影响，�
 - 可以通过标识文件版本名、加长缓存时间的方式来减少304响应。
 
 reference
-1. https://mp.weixin.qq.com/s?src=3&timestamp=1498375738&ver=1&signature=Zp6KbzPgT3IBNvIX8xR5RXHw5EU7pSQsfMFjWz7d1RvSTWq1r5e1tzRCWLx80qlWeDRsK4oyZ3m1UgfJfQtQCteZ1eOtbEmzQeiQS3dJCsiuRExFQVNum60mLUpVkHVAoUudWJXuoV9IxvxTPb3Adj-Ur-vnZ46zxz0Jx*Q1uPs=
-2. https://mp.weixin.qq.com/s?src=3&timestamp=1498375663&ver=1&signature=buYoL90ILFP8Po1Qshp3SE09MLc5PK8MZ9Yu6GkRbUYHO7DZfQSjxf9N5CqVViIrGuSCzQDepFFIfreY6uLrwAZNNvUlsyf6XaFfHq8kBFYpdJaWWrpsu4nzkliExz6-eZDKO6OP0TV6cUG6LX8taww3SDubF7VEPDh3PKgKMLM=
-3. https://mp.weixin.qq.com/s?src=3&timestamp=1498375663&ver=1&signature=uU8JOuu3EvW4WBCkvgRwIqhC7qx7Rk*CwDLmABy9AmQ*8w6wvy0hxjANGNT84ZOPIM*G9p7VWxn-buP2q9Y9S3fH7muLshMPcRlCOobRs7oiKea6*in*fs*Y4Vc9kPrUDzyKGTtC0qrnkkP-dj-cokq0P5nPr4indNGq*3c5xU8=
-4. https://mp.weixin.qq.com/s?src=3&timestamp=1498375663&ver=1&signature=oGbg6VF960VlGJCy7VJFObzC3AKrCe6wLwBd6G5kVCTTr29NCFm70x*hNoq5K5xJAEhuXs2dGRG1hg4KHc9LIMY5xrs1OZUlYt9auR68PhXj2aIKyAFjf*uAqv08rahZMCmasdrakWJbiBmdcMs8woDzcfVdtycyN-QW33FU3y4=   
-5. http://www.cnblogs.com/shanyou/archive/2012/05/06/2486134.html
+1. www.cnblogs.com/vajoy/p/5341664.html
+2. https://zhuanlan.zhihu.com/p/25512679
+3. http://imweb.io/topic/5795dcb6fb312541492eda8c
+4. http://www.cnblogs.com/shanyou/archive/2012/05/06/2486134.html
+5. http://imweb.io/topic/55e3ba46771670e207a16bc8 (DNS相关)
