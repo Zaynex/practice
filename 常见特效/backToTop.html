@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .high {
+      height: 3000px;
+      width: 300px;
+      margin: 0 auto;
+      background-color: royalblue;
+    }
+
+    .back {
+      position: fixed;
+      right: 50px;
+      bottom: 50px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      line-height: 100px;
+      background-color: aqua;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="high">滚到到页面顶端(Scroll To Top)的简单实现 May 23, 2016 | Front End | 105 Hits 当页面长度较长时，常常需要在页面的左侧或右侧放置一个按钮，让用户能方便地回到顶端去。单纯地使用
+    <a>标签直接跳转到网页内部某个锚的方式过于激进，用户难以掌握当前内容与跳转目的内容间的关系。本文使用简短的JS代码，展示了如何平滑移动到目的位置。
+
+      Step 1：在页面右下角固定一个div
+
+      假定有一个id为rocket的div：
+
+      1
+      2
+      <div id="rocket">
+      </div>
+      将其position属性设置为fixed，并且设置其bottom和right属性到合适的位置：
+
+      1
+      2
+      3
+      4
+      5
+      6
+      7
+      8
+      #rocket {
+          position: fixed;
+          bottom: 50px;
+          right: 50px;
+          width: 40px;
+          height: 40px;
+          background: blue;
+      }
+      这里为了方便查看，设置了其高度和宽度，并设置其背景色为蓝色。
+
+      Step 2: 设置点击滚动事件
+
+      这里使用jQuery的animate来实现滚动效果的动画，设置scrollTop为0让页面滚动到顶端：
+
+      1
+      2
+      3
+      4
+      5
+      $("#rocket").click(function() {
+          $("html, body").animate({
+              scrollTop: 0
+          }, 500);
+      });
+      这里同时选取html和body是为了兼容各个版本的浏览器：webkit内核的浏览器使用body进行滑动，而其他浏览器则使用html进行滑动。
+
+      Step 3: 控制rocket的显示与隐藏
+
+      有时候，当页面长度本身不长；或者用户并没有浏览太多内容，仍然停留在页面顶部的时，依旧显示滚动到顶端就显得很多余。可以通过在window对象scroll事件里监视scrollTop的值来控制rocket的显示与隐藏：
+
+      1
+      2
+      3
+      4
+      5
+      $(window).scroll(function() {
+          $(window).scrollTop() > 300
+          ? $("#rocket").addClass("show")
+          : $("#rocket").removeClass("show");
+      });
+      扩充rocket的CSS样式如下：
+
+      1
+      2
+      3
+      4
+      5
+      6
+      7
+      8
+      #rocket {
+          ...
+          visibility: hidden;
+      }
+      #rocket.show {
+          visibility: visible;
+      }
+      到此，滚动到顶部的功能已经基本完成了，这里给出实现整个功能的完整</div>
+  <span class="back">Back To Top</span>
+  <script>
+    let back = document.getElementsByClassName('back')[0]
+    let html = document.getElementsByTagName('html')[0]
+    const animate = { scrollTop: 0 }
+    back.addEventListener('click', handleBack, false)
+    function handleBack() {
+      // 由于 css3的属性只针对 css properties 有效，下面的方式是无用的
+      html.style.transition = 'all 5s initial 1s'
+      // html.style['-webkit-transition'] = 'all 5s initial 1s'
+      Object.keys(animate).forEach((key) =>
+        html.style['margin-top'] = animate[key]
+      )
+    }
+
+    var easing, e, pos;
+    $(function () {
+      // Get the click event
+      $("#go-top").on("click", function () {
+        // Get the scroll pos
+        pos = $(window).scrollTop();
+        // Set the body top margin
+        $("body").css({
+          "margin-top": -pos + "px",
+          "overflow-y": "scroll", // This property is posed for fix the blink of the window width change
+        });
+        // Make the scroll handle on the position 0
+        $(window).scrollTop(0);
+        // Add the transition property to the body element
+        $("body").css("transition", "all 1s ease");
+        // Apply the scroll effects
+        $("body").css("margin-top", "0");
+        // Wait until the transition end
+        $("body").on("webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", function () {
+          // Remove the transition property
+          $("body").css("transition", "none");
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
