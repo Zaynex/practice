@@ -107,23 +107,104 @@
 
 // 让同步函数同步执行，异步函数异步执行的方法
 // 1 自执行匿名函数，如果 f是同步则立即执行，如果是异步则异步执行
-const f = () => console.log('ffff')
+// const f = () => console.log('ffff')
 
-  (async () => f())()
-console.log('next')
+// (async () => f())()
 
-  // 2 promise 将函数执行的结果放到 resolve 中 一直等待 f()返回结果才会 resolve 最终值
-  (() => new Promise(
-    resolve => resolve(f())
-  )
-  )()
+// 2 promise 将函数执行的结果放到 resolve 中 一直等待 f()返回结果才会 resolve 最终值
+// (() => new Promise(
+//   resolve => resolve(f())
+// )
+// )()
 
 // 3 promise.try(f) 直接转
 // 好处是
-Promise.try(f).then().catch()
+// Promise.try(f).then().catch()
 // 使用catch 可以捕获错误
 // 之前的方式对于同步的函数来说如果出现错误时只能在外层通过 try catch 来实现
 
 
 // 12.22 完。
 
+
+const asyncFunction1 = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('wait 3s, asyncFunction1')
+      resolve('resolve asyncFunction1')
+    }, 3000)
+  })
+}
+const asyncFunction2 = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('wait 3s, asyncFunction2')
+      resolve('resolve asyncFunction2, all finished')
+    }, 3000)
+  })
+}
+// const p1 = Promise.resolve('sync promise').then(asyncFunction1).then(asyncFunction2)
+
+// var p2 = p1.then(asyncFunction1).then(console.log)
+// var p3 = p2.then(asyncFunction2).then(console.log)
+
+// 现在需要整合 promise，支持如下链式结构
+
+// const createInsideOutPromise = () => {
+//   let promiseResolve, promiseReject
+//   return {
+//     promise: new Promise((resolve, reject) => {
+//       promiseResolve = resolve
+//       promiseReject = reject
+//     }),
+//     resolve: (value) => {
+//       if (promiseResolve === undefined) return
+//       const resolve = promiseResolve
+//       promiseResolve = promiseReject = undefined
+//       return resolve(value)
+//     },
+//     reject: (error) => {
+//       if (promiseReject === undefined) return
+//       const reject = promiseReject
+//       promiseResolve = promiseReject = undefined
+//       return reject(error)
+//     }
+//   }
+// }
+
+const asyncFunction3 = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('wait 1s, asyncFunction3')
+      reject('reject asyncFunction3, all finished')
+    }, 1000)
+  })
+}
+const asyncFunction4 = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('wait 1s, asyncFunction4')
+      reject('reject asyncFunction4, all finished')
+    }, 1000)
+  })
+}
+const createAsyncTaskQueue = () => {
+  let queueTail = Promise.resolve('QUEUE_HEAD')
+  const pushTask = (asyncTask) => {
+    // 拦截队伍中存在的 error,但不影响队伍继续
+    const taskPromise = queueTail.then(asyncTask).catch(console.log)
+    queueTail = taskPromise
+    return taskPromise
+  }
+  return { pushTask }
+}
+
+const { pushTask } = createAsyncTaskQueue()
+
+pushTask(asyncFunction1)
+pushTask(asyncFunction2)
+pushTask(asyncFunction3)
+pushTask(asyncFunction4)
+pushTask(asyncFunction3)
+pushTask(asyncFunction2)
+pushTask(asyncFunction1)
